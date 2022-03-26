@@ -1,0 +1,262 @@
+/* setting two toned header */
+header {
+    border-bottom: 3px solid rgb(104, 139, 155);
+    padding: 0;
+    text-align: left;
+    background: linear-gradient(to bottom, rgb(192, 232, 255) 0%, rgb(192, 232, 255) 45%, rgb(42, 42, 170) 50%, rgb(42, 42, 170) 100%);
+    padding: 60px;
+    margin-bottom: 0;
+    position: sticky;
+
+}
+
+header h1 a {
+    text-decoration: none;
+    display: flex;
+    color: dimgray;
+    justify-content: left;
+    position: absolute; 
+    top: 20px;
+    left: 0;
+}
+
+* {
+    margin: 0 auto;
+}
+/* setting the navigation bar in position */
+header ul li {
+    list-style: none;
+    display: flex;
+    justify-content: right;
+    justify-content: space-between;
+    padding: 10px 15px;
+    flex-wrap: wrap;
+    margin: 7px 0;
+    display: inline;
+    float:right;
+    position: relative; bottom: 60px;
+    color: blue;
+}
+
+.links a {
+    text-decoration: none;
+    color: dimgray;
+}
+
+.links a:hover {
+    color: rgba(42, 42, 170, 0.75);
+    background-color: rgb(42, 158, 148);
+    border-radius: 0%;
+}
+
+body {
+    margin: 0 auto;
+}
+
+.subheader {
+    display: flex;
+    position: absolute; right:0px;
+    top: 85px;
+    background-color: aquamarine;
+    color: rgba(100,55,205, 0.75);
+}
+/* about me section */
+.about-me {
+    display: flex;
+    color: rgb(42, 42, 170);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.about-me h1 {
+    margin: 15px 0 0 110px;
+    color: rgb(42, 42, 170);
+    display: flex;
+    position: absolute;
+    left: 0;
+    padding: 20px 15px 15px 0;
+    border-right:solid 5px rgb(42, 42, 170);
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: bold;
+    font-size: 35px;
+}
+
+.about-me p {
+    flex-direction: row-reverse;
+    display: inline-block;
+    margin: 20px 75px 0 125px;
+    padding: 0 75px 0 225px;
+}
+/* work section */
+.work {
+    display: flex;
+    color: rgb(42, 42, 170);
+}
+
+.work h1 {
+    margin: 15px 0 0 182px;
+    padding: 20px 15px 15px 0;
+    position: absolute;
+    left: 0;
+    font-size: 35px;
+    border-right: solid 5px rgb(42, 42, 170);
+    line-height: 680px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: bold;
+
+}
+/* images and tags for images */
+.flexbox-container img {
+    display: flex;
+    justify-content: space-around;
+    border: solid 5px aquamarine;
+    margin: 15px 20px 15px 20px;
+    size: 55px;
+    width: 60%;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.flex-1 img {
+display: flex;
+justify-content: space-around;
+flex-direction: column;
+max-width: 100%;
+max-height: 100%;
+margin: 20px 0 0 350px; 
+padding: 0; 
+size: 200px;
+position: absolute;
+left: 0;
+height: 100;
+width: 690px;
+object-fit: contain;
+}
+
+.flex-1 h3 {
+margin: 420px 10px 0 350px;
+padding: 0;
+position: absolute;
+left: 0;
+background-color: aquamarine;
+padding-right: 5px;
+display: inline-flex;
+}
+
+.flex-2 img {
+    padding: 0;
+    size: 40px;
+    position: absolute;
+    left: 335px;
+    height: 90px;
+    top: 715px;
+    margin: 20px 15px 20px 15px;
+    width: 25%;
+    height: 90px;
+}
+
+.flex-2 h3 {
+    position: absolute;
+    left: 355px;
+    top: 735px;
+    padding: 0;
+    padding-right: 5px;
+    display: inline-flex;
+    background-color: aquamarine;
+}
+
+.flex-3 img {
+    width: 25%;
+    height: 90px;
+    size: 40px;
+    position: absolute;
+    top: 715px;
+    left: 690px;
+    margin: 20px 15px 20px 15px;
+}
+
+.flex-3 h3 {
+position: absolute;
+left: 710px;
+top: 735px;
+padding: 0;
+padding-right: 5px;
+display: inline-flex;
+background-color: aquamarine;
+}
+    
+
+
+.flex-4 img {
+    position: absolute;
+    top: 835px;
+    left: 335px;
+    margin: 20px 15px 20px 15px;
+    width: 25%;
+    size: 40px;
+    height: 90px;
+}
+
+.flex-4 h3 {
+position: absolute;
+left: 355px;
+top: 930px;
+padding: 0;
+padding-right: 5px;
+display: inline-flex;
+background-color: aquamarine;
+}
+
+.flex-5 img {
+    position: absolute;
+    top: 835px;
+    left: 690px;
+    margin: 20px 15px 20px 15px;
+    width: 25%;
+    size: 40px;
+    height: 90px;
+    padding: 0;
+}
+
+.flex-5 h3 {
+position: absolute;
+left: 710px;
+top: 930px;
+padding: 0;
+padding-right: 5px;
+display: inline-flex;
+background-color: aquamarine;
+}
+
+.contact-me h1 {
+    margin: 15px 0 0 80px;
+    color: rgb(42, 42, 170);
+    display: flex;
+    position: absolute;
+    left: 0;
+    padding: 20px 15px 15px 0;
+    border-right:solid 5px rgb(42, 42, 170);
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: bold;
+    font-size: 35px;
+    top: 960px;
+}
+
+.contact-me ul li {
+    text-decoration: none;
+    display: flex;
+    display: inline-block;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    top: 790px;
+    position: relative;
+    left: 305px;
+    padding-left: 10px;
+    color: rgba(42, 42, 170, 0.75);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+

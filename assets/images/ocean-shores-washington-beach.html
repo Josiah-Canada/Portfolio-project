@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="UTF-8"/><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+			
+		
+		<link rel="profile" href="https://gmpg.org/xfn/11" />
+					<link rel="pingback" href="https://www.gonewiththewynns.com/xmlrpc.php">
+			
+				<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+		<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v18.3 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Ocean Shores - Not The Average Beach - Gone With The Wynns</title><style id="rocket-critical-css">#respond textarea,input[type=text]{width:100%;margin:0 0 25px;padding:10px 11px;font-family:inherit;font-size:14px;line-height:20px;font-weight:inherit;color:#121212;background-color:transparent;border:1px solid #c6c6c6;border-radius:0;outline:0;-webkit-appearance:none;box-sizing:border-box}#respond textarea::-webkit-input-placeholder,input[type=text]::-webkit-input-placeholder{color:#909090;font-weight:300}#respond textarea:-moz-placeholder,input:-moz-placeholder[type=text]{color:#909090;font-weight:300;opacity:1}#respond textarea::-moz-placeholder,input[type=text]::-moz-placeholder{color:#909090;font-weight:300;opacity:1}#respond textarea:-ms-input-placeholder,input:-ms-input-placeholder[type=text]{color:#909090;font-weight:300}a,body,div,form,h2,html,i,iframe,li,p,span,ul{background:0 0;border:0;margin:0;padding:0;vertical-align:baseline;outline:0}article,header,nav{display:block}a img{border:none}img{max-width:100%;height:auto}iframe{max-width:100%}.clearfix:after,.clearfix:before{content:" ";display:table}.clearfix:after{clear:both}html{overflow-y:scroll!important}body{font-family:"Open Sans",sans-serif;font-size:15px;line-height:27px;font-weight:400;color:#777;background-color:#fff;overflow-x:hidden!important;-webkit-font-smoothing:antialiased}h2{color:#121212;font-size:30px;font-weight:700;line-height:1.3em;letter-spacing:.03em}h2{margin:25px 0;font-family:Montserrat,sans-serif;text-transform:uppercase}h3 a{color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;letter-spacing:inherit;text-transform:inherit}a{color:#121212;text-decoration:none}p{margin:10px 0}ul{list-style-position:inside;margin:15px 0}ul ul{margin:0;padding:0 0 0 15px}.text-align-right{text-align:right}.edgtf-wrapper{position:relative;left:0;z-index:1000}.edgtf-wrapper .edgtf-wrapper-inner{width:100%;overflow:hidden}.edgtf-content{position:relative;margin-top:0;z-index:100;background-color:#fff}.edgtf-container{position:relative;padding:0;width:100%;z-index:100}.edgtf-container:before{content:" ";display:table}.edgtf-container:after{content:" ";display:table;clear:both}.edgtf-container-inner{width:1100px;margin:0 auto}.edgtf-content .edgtf-content-inner>.edgtf-container>.edgtf-container-inner{padding-top:70px}.edgtf-grid{width:1100px;margin:0 auto}.edgtf-vertical-align-containers{position:relative;height:100%;width:100%;padding:0 20px;box-sizing:border-box}.edgtf-vertical-align-containers .edgtf-position-left{position:relative;float:left;z-index:2;height:100%}.edgtf-vertical-align-containers .edgtf-position-center{height:100%;width:100%;position:absolute;left:0;text-align:center;z-index:1}.edgtf-vertical-align-containers .edgtf-position-right{position:relative;float:right;z-index:2;height:100%;text-align:right}.edgtf-vertical-align-containers .edgtf-position-center-inner,.edgtf-vertical-align-containers .edgtf-position-left-inner,.edgtf-vertical-align-containers .edgtf-position-right-inner{vertical-align:middle;display:inline-block}.edgtf-vertical-align-containers .edgtf-position-center:before,.edgtf-vertical-align-containers .edgtf-position-left:before,.edgtf-vertical-align-containers .edgtf-position-right:before{content:"";display:inline-block;vertical-align:middle;height:100%;margin-right:0}.edgtf-grid-row{margin-left:-15px;margin-right:-15px}.edgtf-grid-row:after,.edgtf-grid-row:before{content:" ";display:table}.edgtf-grid-row:after{clear:both}.edgtf-grid-large-gutter{margin-left:-25px;margin-right:-25px}.edgtf-grid-large-gutter>div{padding-left:25px;padding-right:25px}.edgtf-grid-col-12{position:relative;float:left;width:100%;min-height:1px;padding-left:15px;padding-right:15px;box-sizing:border-box}.edgtf-grid-col-12:after,.edgtf-grid-col-12:before{content:" ";display:table}.edgtf-grid-col-12:after{clear:both}@media only screen and (max-width:1024px){.edgtf-grid-col-12{width:100%;float:none}}#respond textarea,input[type=text]{width:100%;margin:0 0 25px;padding:10px 11px;font-family:inherit;font-size:14px;line-height:20px;font-weight:inherit;color:#121212;background-color:transparent;border:1px solid #c6c6c6;border-radius:0;outline:0;-webkit-appearance:none;box-sizing:border-box}#respond textarea::-webkit-input-placeholder,input[type=text]::-webkit-input-placeholder{color:#909090;font-weight:300}#respond textarea:-moz-placeholder,input:-moz-placeholder[type=text]{color:#909090;font-weight:300;opacity:1}#respond textarea::-moz-placeholder,input[type=text]::-moz-placeholder{color:#909090;font-weight:300;opacity:1}#respond textarea:-ms-input-placeholder,input:-ms-input-placeholder[type=text]{color:#909090;font-weight:300}#respond textarea{display:block;padding:14px 13px;min-height:177px}#edgtf-back-to-top{position:fixed;width:23px;right:25px;bottom:25px;height:60px;margin:0;z-index:10000;opacity:0;visibility:hidden}#edgtf-back-to-top .edgtf-btt-text{position:absolute;bottom:40px;right:-2px;font-size:10px;letter-spacing:2px;color:#262827;font-family:Montserrat,sans-serif;opacity:0;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);transform:rotate(-90deg)}#edgtf-back-to-top .edgtf-icon-stack{position:relative;display:block;width:21px;height:21px;line-height:18px;font-size:14px;margin-top:30px;text-align:center;color:#585858;background-color:#fff;border:1px solid #585858;overflow:hidden}#edgtf-back-to-top .edgtf-icon-stack:before{content:"";position:absolute;top:9px;left:7px;width:7px;height:7px;border-top:1px solid #585858;border-right:1px solid #585858;-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);transform:rotate(-45deg)}#edgtf-back-to-top .edgtf-icon-stack:after{content:"";position:absolute;top:13px;left:6px;width:9px;height:1px;background-color:#585858}@media only screen and (max-width:480px){#edgtf-back-to-top{display:none}}input[type=text]::-ms-clear{display:none}.widget{margin:0 0 35px}.edgtf-page-header .widget{margin:0}.edgtf-social-icon-widget-holder{position:relative;display:inline-block;vertical-align:middle;margin:0}.edgtf-social-icon-widget-holder .edgtf-social-icon-widget{color:inherit;line-height:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit}.edgtf-social-icons-group-widget .edgtf-social-icon-widget-holder{display:inline-block;vertical-align:middle;margin:0 23px 0 0;text-align:center}.edgtf-social-icons-group-widget .edgtf-social-icon-widget-holder:first-child{margin-left:0}.edgtf-social-icons-group-widget .edgtf-social-icon-widget-holder:last-child{margin-right:0}.edgtf-blog-holder{position:relative;display:inline-block;width:100%;vertical-align:middle;margin:0 0 40px;clear:both}.edgtf-blog-holder article{position:relative;display:inline-block;width:100%;vertical-align:middle;box-sizing:border-box}.edgtf-blog-holder article .edgtf-post-content{position:relative;display:inline-block;width:100%;vertical-align:middle}.edgtf-blog-holder article .edgtf-post-text{position:relative;display:inline-block;width:100%;vertical-align:middle;box-sizing:border-box}.edgtf-blog-holder article .edgtf-post-info .edgtf-views-holder .edgtf-icon-element{font-size:17px;position:relative;top:3px;padding-right:4px}.edgtf-blog-holder article .edgtf-post-info .edgtf-views-holder span{display:inline-block;vertical-align:top}.edgtf-blog-holder article .edgtf-post-info>div{position:relative;display:inline-block;vertical-align:top;padding:0 14px;color:#777;font-size:10px;letter-spacing:0;font-family:Montserrat,sans-serif}.edgtf-blog-holder article .edgtf-post-info>div:after{content:'/';position:absolute;top:0;right:-2px}.edgtf-blog-holder article .edgtf-post-info>*{position:relative;display:inline-block;vertical-align:top;color:currentColor}.edgtf-blog-holder article .edgtf-post-title{margin:41px 0 8px;text-align:left;width:100%;letter-spacing:-.04em;line-height:1.25em}.edgtf-blog-holder article .edgtf-post-info-top{margin-bottom:5px;position:absolute;top:-15px;left:0;background:#f8f8f8;padding:1px 22px;z-index:9}.edgtf-blog-holder article .edgtf-post-info-top>div{position:relative;display:inline-block;vertical-align:top;padding:0 14px;color:#545454;font-size:12px;letter-spacing:0;font-family:Montserrat,sans-serif}.edgtf-blog-holder article .edgtf-post-info-top>div:after{content:'/';position:absolute;top:0;right:-2px}.edgtf-blog-holder article .edgtf-post-info-top>div:last-child:after{content:''}.edgtf-blog-holder article .edgtf-post-info-top>div:first-child{padding:0}.edgtf-blog-holder article .edgtf-post-info-top>div a{color:inherit}.edgtf-blog-holder article .edgtf-post-info-top .edgtf-post-info-category{font-family:Montserrat,sans-serif;vertical-align:middle;font-size:10px;color:#262827;letter-spacing:.15em;font-weight:600;line-height:20px;text-transform:uppercase}.edgtf-blog-holder article.format-video .edgtf-post-info-top{top:0}.edgtf-related-posts-holder .edgtf-related-post .edgtf-rp-content .edgtf-rp-info-top{display:block;line-height:1;position:absolute;top:-19px;left:-1px;background:#f8f8f8;padding:3px 30px}.edgtf-related-posts-holder .edgtf-related-post .edgtf-rp-content .edgtf-rp-info-top .edgtf-post-info-category{display:-webkit-flex;display:flex;font-family:Montserrat,sans-serif;text-transform:uppercase;font-size:10px;font-weight:600;line-height:22px;letter-spacing:.2em;color:#262827}.edgtf-related-posts-holder .edgtf-related-post .edgtf-rp-content .edgtf-rp-info-top .edgtf-post-info-category a{color:inherit}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info{position:relative;display:inline-block;width:100%;vertical-align:middle;margin:4px 0 0}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info>div{position:relative;display:inline-block;vertical-align:top;float:left;padding:0 13px 0 0;font-size:12px;font-family:Montserrat,sans-serif;color:#545454}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info>div:after{position:absolute;top:0;right:4px;content:'/'}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info>div:last-child{padding:0}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info>div:last-child:after{display:none}.edgtf-related-posts-holder .edgtf-related-post .edgtf-post-info>div a{color:inherit;line-height:inherit;font-size:inherit;font-weight:inherit}.edgtf-blog-holder.edgtf-blog-single article .edgtf-post-info-top>div{font-size:11px}.edgtf-blog-holder.edgtf-blog-single article:not(.format-link):not(.format-quote){margin:0 0 30px}.edgtf-blog-holder.edgtf-blog-single article:not(.format-link):not(.format-quote) .edgtf-post-text{padding:0 0 4px;border-bottom:1px solid #e7e7e7}.edgtf-page-header{position:relative;display:inline-block;width:100%;vertical-align:middle;margin:0;padding:0;z-index:110;box-sizing:border-box}.edgtf-page-header a img{display:block}.edgtf-page-header .edgtf-vertical-align-containers{padding:0 30px}.edgtf-page-header .edgtf-logo-area{position:relative;height:90px;overflow:hidden;background-color:#fff}.edgtf-page-header .edgtf-logo-area .edgtf-logo-wrapper a{max-height:90px}.edgtf-page-header .edgtf-menu-area{position:relative;height:105px;background-color:#fff;box-sizing:border-box}.edgtf-page-header .edgtf-menu-area .widget{display:inline-block;vertical-align:middle;margin:0}.edgtf-logo-area-border-disable .edgtf-page-header .edgtf-logo-area{border:none}.edgtf-menu-area-shadow-disable .edgtf-page-header .edgtf-menu-area{box-shadow:none}.edgtf-menu-area-border-disable .edgtf-page-header .edgtf-menu-area{border:none}.edgtf-logo-wrapper{display:inline-block;vertical-align:middle}.edgtf-logo-wrapper a{position:relative;display:inline-block;vertical-align:middle;max-width:100%}.edgtf-logo-wrapper a img{height:100%;width:auto}.edgtf-logo-wrapper a img.edgtf-normal-logo{opacity:1}.edgtf-logo-wrapper a img.edgtf-dark-logo{opacity:0;-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);transform:translateY(-100%)}.edgtf-logo-wrapper a img.edgtf-light-logo{opacity:0;-webkit-transform:translateY(-200%);-moz-transform:translateY(-200%);transform:translateY(-200%)}.edgtf-main-menu{position:relative;display:inline-block;width:100%;vertical-align:middle;height:100%;width:auto}.edgtf-main-menu ul{list-style:none outside none;margin:0;padding:0;text-align:left}.edgtf-main-menu ul li{position:relative;display:inline-block;float:left;padding:0;margin:0}.edgtf-main-menu ul li a{margin:5px 0;color:#707070;font-family:Montserrat,sans-serif;font-size:11px;line-height:25px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}.edgtf-main-menu ul li a i:before{margin:0 7px 0 0}.edgtf-main-menu>ul{position:relative;display:inline-block;width:100%;vertical-align:middle;height:100%}.edgtf-main-menu>ul>li{float:left;height:100%;box-sizing:border-box}.edgtf-main-menu>ul>li>a{position:relative;display:inline-block;width:100%;vertical-align:middle;height:100%;padding:0 18px;margin:0;color:#121212;font-size:12px;line-height:23px;box-sizing:border-box}.edgtf-main-menu>ul>li>a>span.item_outer{position:relative;display:block;top:50%;-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);transform:translateY(-50%)}.edgtf-main-menu>ul>li>a>span.item_outer .item_text{position:relative;display:inline-block;vertical-align:top}.edgtf-main-menu>ul>li.has_sub>a .edgtf-menu-arrow{display:none}.edgtf-drop-down .second{position:absolute;display:block;left:-13px;top:100%;visibility:hidden;overflow:hidden;opacity:0;z-index:10}.edgtf-drop-down .second .inner{position:relative;display:block;padding:0;margin:0;z-index:997;border:1px solid #ebebeb}.edgtf-drop-down .second .inner ul li{display:block;float:none;height:auto}.edgtf-drop-down .second .inner ul li a{display:block;float:none;padding:0 22px 0 30px}.edgtf-drop-down .second .inner ul li a .item_outer{position:relative;display:block;overflow:hidden;padding:0 20px 0 0;box-sizing:border-box}.edgtf-drop-down .second .inner ul li a .item_text{position:relative}.edgtf-drop-down .second .inner ul li a .item_text:after{position:absolute;display:block;content:" ";left:0;bottom:0;width:0;border-bottom:1px solid #e2ae7f}.edgtf-drop-down .narrow .second .inner ul{position:relative;display:inline-block;vertical-align:middle;background-color:#fff;padding:22px 0}.edgtf-drop-down .narrow .second .inner ul li{width:230px}.edgtf-header-standard-extended .edgtf-page-header .edgtf-logo-area{height:84px;box-sizing:border-box;z-index:1}.edgtf-header-standard-extended .edgtf-page-header .edgtf-logo-area .edgtf-logo-wrapper a{max-height:90px}.edgtf-header-standard-extended .edgtf-page-header .edgtf-logo-area .edgtf-vertical-align-containers{border-bottom:1px solid #ebebeb}.edgtf-header-standard-extended .edgtf-page-header .edgtf-logo-area .edgtf-vertical-align-containers .edgtf-position-right-inner{height:auto}.edgtf-header-standard-extended .edgtf-page-header .edgtf-menu-area{height:70px}.edgtf-header-standard-extended .edgtf-page-header .edgtf-menu-area .edgtf-main-menu{margin-left:0}.edgtf-header-standard-extended .edgtf-page-header .edgtf-menu-area .edgtf-main-menu>ul>li:first-child>a{padding-left:0}.edgtf-header-standard-extended .edgtf-page-header .edgtf-menu-area .edgtf-vertical-align-containers .edgtf-position-left-inner{height:100%}.edgtf-header-standard-extended .edgtf-page-header .edgtf-menu-area .edgtf-vertical-align-containers .edgtf-position-right-inner{height:auto}.edgtf-mobile-header{position:relative;display:none;z-index:110}.edgtf-mobile-header .edgtf-mobile-header-inner{position:relative;height:70px;background-color:#fff;border-bottom:1px solid #ebebeb;box-sizing:border-box}.edgtf-mobile-header .edgtf-mobile-header-inner .edgtf-mobile-header-holder{position:relative;z-index:2;height:100%}.edgtf-mobile-header .edgtf-grid{height:100%}.edgtf-mobile-header .edgtf-vertical-align-containers{padding:0}.edgtf-mobile-header .edgtf-vertical-align-containers .edgtf-position-center{z-index:3}.edgtf-mobile-header .edgtf-vertical-align-containers .edgtf-position-right{max-width:80%;overflow:hidden;z-index:4}.edgtf-mobile-header .edgtf-mobile-logo-wrapper a{display:block}.edgtf-mobile-header .edgtf-mobile-logo-wrapper img{display:block;height:100%;width:auto}.edgtf-mobile-header .edgtf-mobile-menu-opener{position:relative;height:100%;float:left;z-index:4}.edgtf-mobile-header .edgtf-mobile-menu-opener a{display:table;height:100%;padding-right:10px}.edgtf-mobile-header .edgtf-mobile-menu-opener a>*{position:relative;top:2px;display:table-cell;vertical-align:middle;line-height:1em}.edgtf-mobile-header .edgtf-mobile-menu-opener a .edgtf-mobile-menu-icon{font-size:20px}.edgtf-mobile-header .edgtf-mobile-nav{width:100%;display:none;background-color:#fff;border-bottom:1px solid #ebebeb}.edgtf-mobile-header .edgtf-mobile-nav ul{padding:0;margin:0;list-style-type:none}.edgtf-mobile-header .edgtf-mobile-nav ul li{position:relative;padding:0;margin:0}.edgtf-mobile-header .edgtf-mobile-nav ul li a{position:relative;display:block;padding:9px 0;margin:0;font-family:Montserrat,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#777;border-bottom:1px solid #ebebeb}.edgtf-mobile-header .edgtf-mobile-nav ul ul{display:none;margin-left:15px}.edgtf-mobile-header .edgtf-mobile-nav ul ul li a{font-size:11px;line-height:24px}.edgtf-mobile-header .edgtf-mobile-nav ul ul li a>span{position:relative;display:inline-block}.edgtf-mobile-header .edgtf-mobile-nav ul ul li a>span:after{position:absolute;display:block;content:" ";left:0;bottom:5px;width:0;border-bottom:1px solid #e2ae7f}.edgtf-mobile-header .edgtf-mobile-nav .edgtf-grid>ul>li>a{padding-left:4px;font-size:12px}.edgtf-mobile-header .edgtf-mobile-nav .mobile_arrow{position:absolute;right:0;top:0;width:50px;height:100%;padding:9px 12px 9px 0;font-size:15px;line-height:inherit;text-align:right;box-sizing:border-box}.edgtf-mobile-header .edgtf-mobile-nav .mobile_arrow *{display:inline-block;line-height:inherit}.edgtf-mobile-header .edgtf-mobile-nav .mobile_arrow .fa-angle-down{display:none}.edgtf-mobile-header .edgtf-mobile-nav>.edgtf-grid>ul>li:last-child>a{border-bottom:none}.edgtf-sticky-header{position:fixed;top:0;left:0;height:70px;width:100%;z-index:100;-webkit-backface-visibility:hidden;-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);transform:translateY(-100%)}.edgtf-sticky-header .edgtf-sticky-holder{position:relative;height:100%;z-index:2;background-color:#fff;border-bottom:1px solid #ebebeb;box-sizing:border-box}.edgtf-sticky-header .edgtf-sticky-holder .edgtf-vertical-align-containers{padding:0 30px}.edgtf-sticky-header .edgtf-sticky-holder .edgtf-logo-wrapper a{max-height:70px}.edgtf-sticky-header .edgtf-sticky-holder.edgtf-menu-right .edgtf-main-menu{width:auto}.edgtf-sticky-header .edgtf-sticky-holder.edgtf-menu-right .edgtf-vertical-align-containers .edgtf-position-right-inner{height:100%}.edgtf-top-bar{position:relative;display:inline-block;width:100%;vertical-align:middle;height:52px;color:#999;font-family:Montserrat,sans-serif;font-size:10px;font-weight:600;line-height:1;background-color:#121212;z-index:111;text-transform:uppercase;box-sizing:border-box}.edgtf-top-bar>.edgtf-vertical-align-containers{padding:0 15px}.edgtf-top-bar .edgtf-vertical-align-containers .edgtf-position-left:before,.edgtf-top-bar .edgtf-vertical-align-containers .edgtf-position-right:before{display:none}.edgtf-top-bar .edgtf-vertical-align-containers .edgtf-position-left-inner,.edgtf-top-bar .edgtf-vertical-align-containers .edgtf-position-right-inner{display:-webkit-flex;-webkit-align-items:center;display:flex;align-items:center;height:100%}.edgtf-fullscreen-search-holder{position:fixed;top:0;left:0;width:100%;height:100%;z-index:105;opacity:0}.edgtf-fullscreen-search-holder .edgtf-fullscreen-search-table{display:table;width:100%;height:100%}.edgtf-fullscreen-search-holder .edgtf-fullscreen-search-cell{position:relative;display:table-cell;height:100%;width:100%;vertical-align:middle;text-align:center}.edgtf-fullscreen-search-holder .edgtf-form-holder-inner{position:relative;width:40%;margin:auto}.edgtf-fullscreen-search-holder .edgtf-form-holder-inner .edgtf-line{position:absolute;left:0;bottom:-2px;width:0;border-bottom:1px solid #ebebeb}.edgtf-fullscreen-search-holder .edgtf-field-holder{display:block;position:relative}.edgtf-fullscreen-search-holder .edgtf-search-field{position:relative;height:100%;width:100%;margin:0;border:0;background:0 0;outline:0;font-family:inherit;font-size:25px;color:#121212;line-height:2em}.edgtf-fullscreen-search-holder .edgtf-search-submit{position:absolute;right:0;bottom:-20px;width:auto;font-size:18px;line-height:1em;color:#777;background-color:transparent;border:none;outline:0;opacity:0}.edgtf-fullscreen-search-holder .edgtf-fullscreen-search-close{position:absolute;top:40px;right:40px;color:#777;font-size:45px;opacity:0;visibility:hidden;z-index:1}.edgtf-search-fade .edgtf-fullscreen-search-holder{visibility:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;opacity:0;z-index:112;box-sizing:border-box}.edgtf-search-fade .edgtf-fullscreen-search-holder .edgtf-fullscreen-search-table{background-color:rgba(255,255,255,.98)}@media only screen and (max-width:1024px){body:not(.edgtf-content-is-behind-header):not(.error404) .edgtf-content{margin-top:0!important}}@media only screen and (max-width:1200px){.edgtf-container-inner,.edgtf-grid{width:950px}}@media only screen and (max-width:1024px){.edgtf-container-inner,.edgtf-grid{width:768px}}@media only screen and (max-width:768px){.edgtf-container-inner,.edgtf-grid{width:600px}}@media only screen and (max-width:680px){.edgtf-container-inner,.edgtf-grid{width:420px}}@media only screen and (max-width:480px){.edgtf-container-inner,.edgtf-grid{width:300px}}@media only screen and (max-width:320px){.edgtf-container-inner,.edgtf-grid{width:90%}}@media only screen and (max-width:1024px){.edgtf-page-header{display:none}}@media only screen and (max-width:1024px){.edgtf-mobile-header{display:block}}@media only screen and (max-width:1024px){.edgtf-top-bar{display:none}}@media only screen and (max-width:1024px){.edgtf-fullscreen-search-holder .edgtf-form-holder-inner{width:75%}}@media only screen and (max-width:768px){.edgtf-fullscreen-search-holder .edgtf-search-submit{font-size:25px}}@media only screen and (max-width:480px){.edgtf-fullscreen-search-holder .edgtf-form-holder-inner{width:80%}}@font-face{font-display:swap;font-family:'ElegantIcons';src:url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/fonts/ElegantIcons.eot);src:url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/fonts/ElegantIcons.eot?#iefix) format('embedded-opentype'),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/fonts/ElegantIcons.woff) format('woff'),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/fonts/ElegantIcons.ttf) format('truetype'),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/fonts/ElegantIcons.svg#ElegantIcons) format('svg');font-weight:normal;font-style:normal}.icon_close,.icon_search,.icon_menu{font-family:'ElegantIcons';speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased}.icon_close:before{content:"\4d"}.icon_search:before{content:"\55"}.icon_menu:before{content:"\61"}@font-face{font-display:swap;font-family:"linea-basic-10";src:url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/basic/fonts/linea-basic-10.eot);src:url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/basic/fonts/linea-basic-10.eot?#iefix) format("embedded-opentype"),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/basic/fonts/linea-basic-10.woff) format("woff"),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/basic/fonts/linea-basic-10.ttf) format("truetype"),url(https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/basic/fonts/linea-basic-10.svg#linea-basic-10) format("svg");font-weight:normal;font-style:normal}[class*=" icon-basic-"]:before{font-family:"linea-basic-10"!important;font-style:normal!important;font-weight:normal!important;font-variant:normal!important;text-transform:none!important;speak:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.icon-basic-eye:before{content:"H"}.edgtf-drop-down .second .inner ul li a .item_text:after{border-color:#70ccd4}body,.edgtf-content{background-color:#ffffff}h2{color:#fbc545;font-size:f9d63cpx}p{color:#000000}a{color:#70ccd4;font-style:normal;font-weight:600;text-decoration:none}.edgtf-mobile-header .edgtf-mobile-header-inner{background-color:#70ccd4;border-color:#70ccd4}.edgtf-mobile-header .edgtf-mobile-nav{background-color:#70ccd4;border-color:#70ccd4}.edgtf-mobile-header .edgtf-mobile-nav ul li a{border-bottom-color:#ffffff}.edgtf-mobile-header .edgtf-mobile-nav .edgtf-grid>ul>li>a{color:#ffffff}.edgtf-mobile-header .edgtf-mobile-nav ul ul li a{color:#ffffff}.edgtf-mobile-header .edgtf-mobile-menu-opener a{color:#ffffff}.edgtf-page-header .edgtf-sticky-header .edgtf-sticky-holder{background-color:rgba(112,204,212,1)}.edgtf-page-header .edgtf-sticky-header .edgtf-sticky-holder{border-color:#70ccd4}.edgtf-main-menu.edgtf-sticky-nav>ul>li>a{color:#ffffff}.edgtf-top-bar>.edgtf-vertical-align-containers{padding-left:0px;padding-right:0px}.edgtf-top-bar{background-color:rgba(112,204,212,1)}.edgtf-page-header .edgtf-menu-area{background-color:rgba(112,204,212,1)}.edgtf-page-header .edgtf-logo-area{background-color:rgba(112,204,212,1);height:90px!important}.edgtf-main-menu>ul>li>a{color:#ffffff}.edgtf-drop-down .second .inner>ul>li>a{color:#ffffff}.edgtf-drop-down .narrow .second .inner ul{background-color:rgba(112,204,212,1)}</style><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A300%2C400%2C500%2C600%2C700%7CMontserrat%3A300%2C400%2C500%2C600%2C700%7CCormorant%20Garamond%3A300%2C400%2C500%2C600%2C700%7CDidact%20Gothic%3A300%2C400%2C500%2C600%2C700&#038;subset=latin-ext&#038;display=swap" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A300%2C400%2C500%2C600%2C700%7CMontserrat%3A300%2C400%2C500%2C600%2C700%7CCormorant%20Garamond%3A300%2C400%2C500%2C600%2C700%7CDidact%20Gothic%3A300%2C400%2C500%2C600%2C700&#038;subset=latin-ext&#038;display=swap" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A300%2C400%2C500%2C600%2C700%7CMontserrat%3A300%2C400%2C500%2C600%2C700%7CCormorant%20Garamond%3A300%2C400%2C500%2C600%2C700%7CDidact%20Gothic%3A300%2C400%2C500%2C600%2C700&#038;subset=latin-ext&#038;display=swap" /></noscript>
+	<meta name="description" content="It&#039;s foggy, damp, and not the warm sunny beach destination one might consider for a summer vacation. Would I visit Ocean Shores again? Oh Yea and here&#039;s why..." />
+	<link rel="canonical" href="https://www.gonewiththewynns.com/ocean-shores-washington-beach" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Ocean Shores - Not The Average Beach - Gone With The Wynns" />
+	<meta property="og:description" content="It&#039;s foggy, damp, and not the warm sunny beach destination one might consider for a summer vacation. Would I visit Ocean Shores again? Oh Yea and here&#039;s why..." />
+	<meta property="og:url" content="https://www.gonewiththewynns.com/ocean-shores-washington-beach" />
+	<meta property="og:site_name" content="Gone With The Wynns" />
+	<meta property="article:publisher" content="https://www.facebook.com/pages/Gone-With-the-Wynns/158456407525617?fref=ts" />
+	<meta property="article:author" content="https://www.facebook.com/GoneWithTheWynns" />
+	<meta property="article:published_time" content="2014-01-16T20:29:55+00:00" />
+	<meta property="article:modified_time" content="2015-02-28T20:26:35+00:00" />
+	<meta property="og:image" content="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg" />
+	<meta property="og:image:width" content="505" />
+	<meta property="og:image:height" content="650" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@http://twitter.com/the_wynns" />
+	<meta name="twitter:site" content="@the_wynns" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Jason Wynn" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="3 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.gonewiththewynns.com/#website","url":"https://www.gonewiththewynns.com/","name":"Gone With The Wynns","description":"Gone With The Wynn’s is the unscripted tale of how Jason and Nikki Wynn sold everything for a life of travel and adventure. From RVing North America to Sailing around the world.","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.gonewiththewynns.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.gonewiththewynns.com/ocean-shores-washington-beach#primaryimage","inLanguage":"en-US","url":"https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg","contentUrl":"https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg","width":505,"height":650,"caption":"trail markers ocean shores"},{"@type":"WebPage","@id":"https://www.gonewiththewynns.com/ocean-shores-washington-beach#webpage","url":"https://www.gonewiththewynns.com/ocean-shores-washington-beach","name":"Ocean Shores - Not The Average Beach - Gone With The Wynns","isPartOf":{"@id":"https://www.gonewiththewynns.com/#website"},"primaryImageOfPage":{"@id":"https://www.gonewiththewynns.com/ocean-shores-washington-beach#primaryimage"},"datePublished":"2014-01-16T20:29:55+00:00","dateModified":"2015-02-28T20:26:35+00:00","author":{"@id":"https://www.gonewiththewynns.com/#/schema/person/b0299179f32114b03bc0ac0296798d0d"},"description":"It's foggy, damp, and not the warm sunny beach destination one might consider for a summer vacation. Would I visit Ocean Shores again? Oh Yea and here's why...","breadcrumb":{"@id":"https://www.gonewiththewynns.com/ocean-shores-washington-beach#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.gonewiththewynns.com/ocean-shores-washington-beach"]}]},{"@type":"BreadcrumbList","@id":"https://www.gonewiththewynns.com/ocean-shores-washington-beach#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.gonewiththewynns.com/"},{"@type":"ListItem","position":2,"name":"Ocean Shores &#8211; Not The Average Beach"}]},{"@type":"Person","@id":"https://www.gonewiththewynns.com/#/schema/person/b0299179f32114b03bc0ac0296798d0d","name":"Jason Wynn","image":{"@type":"ImageObject","@id":"https://www.gonewiththewynns.com/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/94f50b04d69e70975f3aa13c7b5e434f?s=96&d=mm&r=pg","contentUrl":"https://secure.gravatar.com/avatar/94f50b04d69e70975f3aa13c7b5e434f?s=96&d=mm&r=pg","caption":"Jason Wynn"},"description":"Famous for my \"how-not-to\" videos, and typically the man behind the camera, sometimes I’m forced to be here in the “spotlight”. When you see my face you’re probably reading something more technical than adventurous, but either way I do my best to tell it like it is and infuse my opinions into the commentary…after all this is a blog and not MSN.","sameAs":["https://www.gonewiththewynns.com","https://www.facebook.com/GoneWithTheWynns","https://www.instagram.com/the_wynns/","https://twitter.com/http://twitter.com/the_wynns","https://www.youtube.com/user/gonewiththewynns"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Gone With The Wynns &raquo; Feed" href="https://www.gonewiththewynns.com/feed" />
+<link rel="alternate" type="application/rss+xml" title="Gone With The Wynns &raquo; Comments Feed" href="https://www.gonewiththewynns.com/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="Gone With The Wynns &raquo; Ocean Shores &#8211; Not The Average Beach Comments Feed" href="https://www.gonewiththewynns.com/ocean-shores-washington-beach/feed" />
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='preload'   href='https://www.gonewiththewynns.com/wp-includes/css/dist/block-library/style.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-vendors-style.css?ver=6.9.0' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-style.css?ver=6.9.0' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/modules.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-news/assets/css/news.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/modules-responsive.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-news/assets/css/news-responsive.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/revslider/public/assets/css/rs6.css?ver=6.2.23' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<style id='rs-plugin-settings-inline-css' type='text/css'>
+#rs-demo-id {}
+</style>
+<style id='woocommerce-inline-inline-css' type='text/css'>
+.woocommerce form .form-row .required { visibility: visible; }
+</style>
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/style.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo-child/style.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/font-awesome/css/font-awesome.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/style.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/ion-icons/css/ionicons.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linear-icons/style.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/style.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/style_dynamic.css?ver=1618898257' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/style_dynamic_responsive.css?ver=1618898257' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+
+<link rel='preload'   href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/core-dashboard/assets/css/core-dashboard.min.css?ver=5.9.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" onerror="this.removeAttribute('data-rocket-async')"  type='text/css' media='all' />
+<style id='rocket-lazyload-inline-css' type='text/css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player:focus-within{outline: 2px solid currentColor;outline-offset: 5px;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:100%;width:100%;left:0;top:0;position:absolute;background:url(https://www.gonewiththewynns.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat center;background-color: transparent !important;cursor:pointer;border:none;}
+</style>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/revslider/public/assets/js/rbtools.min.js?ver=6.2.23' id='tp-tools-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/revslider/public/assets/js/rs6.min.js?ver=6.2.23' id='revmin-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.7.0-wc.6.3.1' id='jquery-blockui-js' defer></script>
+<script type='text/javascript' id='wc-add-to-cart-js-extra'>
+/* <![CDATA[ */
+var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/www.gonewiththewynns.com\/cart","is_cart":"","cart_redirect_after_add":"no"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=6.3.1' id='wc-add-to-cart-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/js_composer/assets/js/vendors/woocommerce-add-to-cart.js?ver=6.4.1' id='vc_woocommerce-add-to-cart-js-js' defer></script>
+<link rel="https://api.w.org/" href="https://www.gonewiththewynns.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.gonewiththewynns.com/wp-json/wp/v2/posts/7713" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.gonewiththewynns.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.gonewiththewynns.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.9.2" />
+<meta name="generator" content="WooCommerce 6.3.1" />
+<link rel='shortlink' href='https://www.gonewiththewynns.com/?p=7713' />
+<link rel="alternate" type="application/json+oembed" href="https://www.gonewiththewynns.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.gonewiththewynns.com%2Focean-shores-washington-beach" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.gonewiththewynns.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.gonewiththewynns.com%2Focean-shores-washington-beach&#038;format=xml" />
+	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
+	<meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress."/>
+<meta name="generator" content="Powered by Slider Revolution 6.2.23 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<link rel="icon" href="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/cropped-wind-vane100-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/cropped-wind-vane100-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/cropped-wind-vane100-180x180.jpg" />
+<meta name="msapplication-TileImage" content="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/cropped-wind-vane100-270x270.jpg" />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">function setREVStartSize(e){
+			//window.requestAnimationFrame(function() {				 
+				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;	
+				window.RSIH = window.RSIH===undefined ? window.innerHeight : window.RSIH;	
+				try {								
+					var pw = document.getElementById(e.c).parentNode.offsetWidth,
+						newh;
+					pw = pw===0 || isNaN(pw) ? window.RSIW : pw;
+					e.tabw = e.tabw===undefined ? 0 : parseInt(e.tabw);
+					e.thumbw = e.thumbw===undefined ? 0 : parseInt(e.thumbw);
+					e.tabh = e.tabh===undefined ? 0 : parseInt(e.tabh);
+					e.thumbh = e.thumbh===undefined ? 0 : parseInt(e.thumbh);
+					e.tabhide = e.tabhide===undefined ? 0 : parseInt(e.tabhide);
+					e.thumbhide = e.thumbhide===undefined ? 0 : parseInt(e.thumbhide);
+					e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);		
+					if(e.layout==="fullscreen" || e.l==="fullscreen") 						
+						newh = Math.max(e.mh,window.RSIH);					
+					else{					
+						e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+						for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];					
+						e.gh = e.el===undefined || e.el==="" || (Array.isArray(e.el) && e.el.length==0)? e.gh : e.el;
+						e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+						for (var i in e.rl) if (e.gh[i]===undefined || e.gh[i]===0) e.gh[i] = e.gh[i-1];
+											
+						var nl = new Array(e.rl.length),
+							ix = 0,						
+							sl;					
+						e.tabw = e.tabhide>=pw ? 0 : e.tabw;
+						e.thumbw = e.thumbhide>=pw ? 0 : e.thumbw;
+						e.tabh = e.tabhide>=pw ? 0 : e.tabh;
+						e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;					
+						for (var i in e.rl) nl[i] = e.rl[i]<window.RSIW ? 0 : e.rl[i];
+						sl = nl[0];									
+						for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}															
+						var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);					
+						newh =  (e.gh[ix] * m) + (e.tabh + e.thumbh);
+					}				
+					if(window.rs_init_css===undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));					
+					document.getElementById(e.c).height = newh+"px";
+					window.rs_init_css.innerHTML += "#"+e.c+"_wrapper { height: "+newh+"px }";				
+				} catch(e){
+					console.log("Failure at Presize of Slider:" + e)
+				}					   
+			//});
+		  };</script>
+		<style type="text/css" id="wp-custom-css">
+			.edgtf-top-bar {
+	display: none;
+} 
+.edgtf-tags-label {
+    display: none !important;
+
+}
+
+.edgtf-tags {
+    display: none !important;
+}
+.edgtf-related-posts-holder .edgtf-related-post 
+.edgtf-rp-content .edgtf-rp-info-top,
+.edgtf-related-posts-holder .edgtf-related-post 
+.edgtf-post-info {
+    display: none;
+}
+.archive .edgtf-blog-holder article .edgtf-post-info-top,
+.archive .edgtf-blog-holder article .edgtf-post-info,
+.archive .edgtf-blog-holder article .edgtf-post-info-bottom 
+.edgtf-post-info-bottom-right {
+    display: none;
+}
+
+.edgtf-views-holder {
+	display: none !important;
+}		</style>
+		<noscript><style> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><script type="rocketlazyloadscript">
+/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+(function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){}}
+var rp=loadCSS.relpreload={};rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1}
+return function(){return ret}})();rp.bindMediaToggle=function(link){var finalMedia=link.media||"all";function enableStylesheet(){link.media=finalMedia}
+if(link.addEventListener){link.addEventListener("load",enableStylesheet)}else if(link.attachEvent){link.attachEvent("onload",enableStylesheet)}
+setTimeout(function(){link.rel="stylesheet";link.media="only x"});setTimeout(enableStylesheet,3000)};rp.poly=function(){if(rp.support()){return}
+var links=w.document.getElementsByTagName("link");for(var i=0;i<links.length;i++){var link=links[i];if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){link.setAttribute("data-loadcss",!0);rp.bindMediaToggle(link)}}};if(!rp.support()){rp.poly();var run=w.setInterval(rp.poly,500);if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run)})}else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run)})}}
+if(typeof exports!=="undefined"){exports.loadCSS=loadCSS}
+else{w.loadCSS=loadCSS}}(typeof global!=="undefined"?global:this))
+</script></head>
+<body class="post-template-default single single-post postid-7713 single-format-standard theme-journo edgt-core-1.2.1 edgt-news-1.0.4 woocommerce-no-js journo child-child-ver-1.0.0 journo-ver-1.8.1 edgtf-grid-1100 edgtf-empty-google-api edgtf-sticky-header-on-scroll-down-up edgtf-dropdown-default edgtf-header-standard-extended edgtf-menu-area-shadow-disable edgtf-menu-area-in-grid-shadow-disable edgtf-menu-area-border-disable edgtf-menu-area-in-grid-border-disable edgtf-logo-area-border-disable edgtf-woocommerce-columns-4 edgtf-woo-normal-space edgtf-woo-pl-info-below-image edgtf-woo-single-thumb-below-image edgtf-woo-single-has-pretty-photo edgtf-default-mobile-header edgtf-sticky-up-mobile-header edgtf-header-top-enabled edgtf-fullscreen-search edgtf-search-fade wpb-js-composer js-comp-ver-6.4.1 vc_responsive" itemscope itemtype="http://schema.org/WebPage">
+
+	
+    <div class="edgtf-wrapper">
+        <div class="edgtf-wrapper-inner">
+            	
+		
+	<div class="edgtf-top-bar">
+				
+						
+			<div class="edgtf-vertical-align-containers">
+				<div class="edgtf-position-left">
+					<div class="edgtf-position-left-inner">
+											</div>
+				</div>
+				<div class="edgtf-position-right">
+					<div class="edgtf-position-right-inner">
+											</div>
+				</div>
+			</div>
+				
+				
+			</div>
+	
+	<div class="edgtf-fullscreen-search-holder">
+	<a class="edgtf-fullscreen-search-close" href="javascript:void(0)">
+		<span aria-hidden="true" class="edgtf-icon-font-elegant icon_close " ></span>	</a>
+	<div class="edgtf-fullscreen-search-table">
+		<div class="edgtf-fullscreen-search-cell">
+			<div class="edgtf-fullscreen-search-inner">
+				<form action="https://www.gonewiththewynns.com/" class="edgtf-fullscreen-search-form" method="get">
+					<div class="edgtf-form-holder">
+						<div class="edgtf-form-holder-inner">
+							<div class="edgtf-field-holder">
+								<input type="text" placeholder="Search for..." name="s" class="edgtf-search-field" autocomplete="off"/>
+							</div>
+							<button type="submit" class="edgtf-search-submit"><span aria-hidden="true" class="edgtf-icon-font-elegant icon_search " ></span></button>
+							<div class="edgtf-line"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<header class="edgtf-page-header">
+		
+    <div class="edgtf-logo-area">
+	    	    
+        			
+            <div class="edgtf-vertical-align-containers">
+                <div class="edgtf-position-left">
+                    <div class="edgtf-position-left-inner">
+                        
+
+<div class="edgtf-logo-wrapper">
+    <a itemprop="url" href="https://www.gonewiththewynns.com/" style="height: 57px;">
+        <img itemprop="image" class="edgtf-normal-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-normal-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="logo"/></noscript>
+        <img itemprop="image" class="edgtf-dark-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="dark logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-dark-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="dark logo"/></noscript>        <img itemprop="image" class="edgtf-light-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="light logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-light-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="light logo"/></noscript>    </a>
+</div>
+
+                    </div>
+                </div>
+                <div class="edgtf-position-right">
+                    <div class="edgtf-position-right-inner">
+						                    </div>
+                </div>
+            </div>
+	            
+            </div>
+	
+    	        
+    <div class="edgtf-menu-area">
+	    	    
+        	            
+            <div class="edgtf-vertical-align-containers">
+                <div class="edgtf-position-left">
+                    <div class="edgtf-position-left-inner">
+                        
+<nav class="edgtf-main-menu edgtf-drop-down edgtf-default-nav">
+    <ul id="menu-main-menu" class="clearfix"><li id="nav-menu-item-3577" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/about" class=""><span class="item_outer"><span class="item_text">about</span></span></a></li>
+<li id="nav-menu-item-25398" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/curiosity-sailboat" class=""><span class="item_outer"><span class="item_text">Our Sailboat</span></span></a></li>
+<li id="nav-menu-item-14747" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://www.gonewiththewynns.com/blog" class=""><span class="item_outer"><span class="item_text">Blogs &#038; Videos</span><i class="edgtf-menu-arrow fa fa-angle-down"></i></span></a>
+<div class="second"><div class="inner"><ul>
+	<li id="nav-menu-item-23918" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/sailing" class=""><span class="item_outer"><span class="item_text">Sailing</span></span></a></li>
+	<li id="nav-menu-item-7007" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/rvin" class=""><span class="item_outer"><span class="item_text">rv&#8217;in</span></span></a></li>
+	<li id="nav-menu-item-25576" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/living-off-grid-rv-sailboat" class=""><span class="item_outer"><span class="item_text">Living Off The Grid</span></span></a></li>
+	<li id="nav-menu-item-8821" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/make-money-travel" class=""><span class="item_outer"><span class="item_text">make money &#038; travel</span></span></a></li>
+	<li id="nav-menu-item-15654" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/alaska-canada-adventures" class=""><span class="item_outer"><span class="item_text">RV&#8217;ing Alaska</span></span></a></li>
+</ul></div></div>
+</li>
+<li id="nav-menu-item-5085" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/map" class=""><span class="item_outer"><span class="item_text">map</span></span></a></li>
+<li id="nav-menu-item-13414" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://www.gonewiththewynns.com/store" class=""><span class="item_outer"><span class="item_text">Gear Store</span><i class="edgtf-menu-arrow fa fa-angle-down"></i></span></a>
+<div class="second"><div class="inner"><ul>
+	<li id="nav-menu-item-13432" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/cart" class=""><span class="item_outer"><span class="item_text">Cart</span></span></a></li>
+</ul></div></div>
+</li>
+<li id="nav-menu-item-8974" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/tip-jar" class=""><span class="item_outer"><span class="item_text">Say Thanks</span></span></a></li>
+<li id="nav-menu-item-28363" class="menu-item menu-item-type-custom menu-item-object-custom  narrow"><a href="https://gonewiththewynns.teemill.com/" class=""><span class="item_outer"><span class="item_text">Swag Shop</span></span></a></li>
+</ul></nav>
+
+                    </div>
+                </div>
+                <div class="edgtf-position-right">
+                    <div class="edgtf-position-right-inner">
+						<div class="widget edgtf-social-icons-group-widget edgtf-light-skin text-align-right">							<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 20px"				   href="https://instagram.com/the_wynns/" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-instagram"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 20px"				   href="https://www.facebook.com/GoneWithTheWynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-facebook"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 20px" href="https://twitter.com/the_wynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-twitter"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 20px"				   href="https://www.youtube.com/user/gonewiththewynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-youtube-play"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 20px" href="https://gonewiththewynns.us2.list-manage.com/subscribe?u=5c89f5d017c3d983a7a948c8f&#038;id=a0ce128eaa" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-envelope-o"></span>				</a>
+						</div>                    </div>
+                </div>
+            </div>
+	            
+            </div>
+	        
+    	
+	
+<div class="edgtf-sticky-header">
+        <div class="edgtf-sticky-holder edgtf-menu-right">
+                    <div class="edgtf-vertical-align-containers">
+                <div class="edgtf-position-left">
+                    <div class="edgtf-position-left-inner">
+                        
+
+<div class="edgtf-logo-wrapper">
+    <a itemprop="url" href="https://www.gonewiththewynns.com/" style="height: 57px;">
+        <img itemprop="image" class="edgtf-normal-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-normal-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="logo"/></noscript>
+        <img itemprop="image" class="edgtf-dark-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="dark logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-dark-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="dark logo"/></noscript>        <img itemprop="image" class="edgtf-light-logo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="light logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" class="edgtf-light-logo" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="light logo"/></noscript>    </a>
+</div>
+
+                                            </div>
+                </div>
+                                <div class="edgtf-position-right">
+                    <div class="edgtf-position-right-inner">
+                                                    
+<nav class="edgtf-main-menu edgtf-drop-down edgtf-sticky-nav">
+    <ul id="menu-main-menu-1" class="clearfix"><li id="sticky-nav-menu-item-3577" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/about" class=""><span class="item_outer"><span class="item_text">about</span><span class="plus"></span></span></a></li>
+<li id="sticky-nav-menu-item-25398" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/curiosity-sailboat" class=""><span class="item_outer"><span class="item_text">Our Sailboat</span><span class="plus"></span></span></a></li>
+<li id="sticky-nav-menu-item-14747" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://www.gonewiththewynns.com/blog" class=""><span class="item_outer"><span class="item_text">Blogs &#038; Videos</span><span class="plus"></span><i class="edgtf-menu-arrow fa fa-angle-down"></i></span></a>
+<div class="second"><div class="inner"><ul>
+	<li id="sticky-nav-menu-item-23918" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/sailing" class=""><span class="item_outer"><span class="item_text">Sailing</span><span class="plus"></span></span></a></li>
+	<li id="sticky-nav-menu-item-7007" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/rvin" class=""><span class="item_outer"><span class="item_text">rv&#8217;in</span><span class="plus"></span></span></a></li>
+	<li id="sticky-nav-menu-item-25576" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/living-off-grid-rv-sailboat" class=""><span class="item_outer"><span class="item_text">Living Off The Grid</span><span class="plus"></span></span></a></li>
+	<li id="sticky-nav-menu-item-8821" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/make-money-travel" class=""><span class="item_outer"><span class="item_text">make money &#038; travel</span><span class="plus"></span></span></a></li>
+	<li id="sticky-nav-menu-item-15654" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/alaska-canada-adventures" class=""><span class="item_outer"><span class="item_text">RV&#8217;ing Alaska</span><span class="plus"></span></span></a></li>
+</ul></div></div>
+</li>
+<li id="sticky-nav-menu-item-5085" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/map" class=""><span class="item_outer"><span class="item_text">map</span><span class="plus"></span></span></a></li>
+<li id="sticky-nav-menu-item-13414" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub narrow"><a href="https://www.gonewiththewynns.com/store" class=""><span class="item_outer"><span class="item_text">Gear Store</span><span class="plus"></span><i class="edgtf-menu-arrow fa fa-angle-down"></i></span></a>
+<div class="second"><div class="inner"><ul>
+	<li id="sticky-nav-menu-item-13432" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/cart" class=""><span class="item_outer"><span class="item_text">Cart</span><span class="plus"></span></span></a></li>
+</ul></div></div>
+</li>
+<li id="sticky-nav-menu-item-8974" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.gonewiththewynns.com/tip-jar" class=""><span class="item_outer"><span class="item_text">Say Thanks</span><span class="plus"></span></span></a></li>
+<li id="sticky-nav-menu-item-28363" class="menu-item menu-item-type-custom menu-item-object-custom  narrow"><a href="https://gonewiththewynns.teemill.com/" class=""><span class="item_outer"><span class="item_text">Swag Shop</span><span class="plus"></span></span></a></li>
+</ul></nav>
+
+                                                                    </div>
+                </div>
+            </div>
+                </div>
+	</div>
+
+	
+	</header>
+
+
+<header class="edgtf-mobile-header">
+		
+	<div class="edgtf-mobile-header-inner">
+		<div class="edgtf-mobile-header-holder">
+			<div class="edgtf-grid">
+				<div class="edgtf-vertical-align-containers">
+					<div class="edgtf-vertical-align-containers">
+													<div class="edgtf-mobile-menu-opener">
+								<a href="javascript:void(0)">
+									<span class="edgtf-mobile-menu-icon">
+										<span aria-hidden="true" class="edgtf-icon-font-elegant icon_menu " ></span>									</span>
+																	</a>
+							</div>
+												<div class="edgtf-position-center">
+							<div class="edgtf-position-center-inner">
+								
+
+<div class="edgtf-mobile-logo-wrapper">
+    <a itemprop="url" href="https://www.gonewiththewynns.com/" style="height: 57px">
+        <img itemprop="image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20114'%3E%3C/svg%3E" width="400" height="114"  alt="Mobile Logo" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png"/><noscript><img itemprop="image" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/GWTW-White-1.png" width="400" height="114"  alt="Mobile Logo"/></noscript>
+    </a>
+</div>
+
+							</div>
+						</div>
+						<div class="edgtf-position-right">
+							<div class="edgtf-position-right-inner">
+															</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    <nav class="edgtf-mobile-nav" role="navigation" aria-label="Mobile Menu">
+        <div class="edgtf-grid">
+            <ul id="menu-main-menu-2" class=""><li id="mobile-menu-item-3577" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/about" class=""><span>about</span></a></li>
+<li id="mobile-menu-item-25398" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/curiosity-sailboat" class=""><span>Our Sailboat</span></a></li>
+<li id="mobile-menu-item-14747" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.gonewiththewynns.com/blog" class=""><span>Blogs &#038; Videos</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+<ul class="sub_menu">
+	<li id="mobile-menu-item-23918" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/sailing" class=""><span>Sailing</span></a></li>
+	<li id="mobile-menu-item-7007" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/rvin" class=""><span>rv&#8217;in</span></a></li>
+	<li id="mobile-menu-item-25576" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/living-off-grid-rv-sailboat" class=""><span>Living Off The Grid</span></a></li>
+	<li id="mobile-menu-item-8821" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/make-money-travel" class=""><span>make money &#038; travel</span></a></li>
+	<li id="mobile-menu-item-15654" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/alaska-canada-adventures" class=""><span>RV&#8217;ing Alaska</span></a></li>
+</ul>
+</li>
+<li id="mobile-menu-item-5085" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/map" class=""><span>map</span></a></li>
+<li id="mobile-menu-item-13414" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.gonewiththewynns.com/store" class=""><span>Gear Store</span></a><span class="mobile_arrow"><i class="edgtf-sub-arrow fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span>
+<ul class="sub_menu">
+	<li id="mobile-menu-item-13432" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/cart" class=""><span>Cart</span></a></li>
+</ul>
+</li>
+<li id="mobile-menu-item-8974" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.gonewiththewynns.com/tip-jar" class=""><span>Say Thanks</span></a></li>
+<li id="mobile-menu-item-28363" class="menu-item menu-item-type-custom menu-item-object-custom "><a href="https://gonewiththewynns.teemill.com/" class=""><span>Swag Shop</span></a></li>
+</ul>        </div>
+    </nav>
+
+	</div>
+	
+	</header>
+
+			<a id='edgtf-back-to-top' href='#'>
+                <span class="edgtf-icon-stack"></span>
+                <span class="edgtf-btt-text">
+                	TOP                </span>
+			</a>
+			        
+            <div class="edgtf-content" >
+                <div class="edgtf-content-inner">	
+	<div class="edgtf-container">
+				
+		<div class="edgtf-container-inner clearfix">
+			<div class="edgtf-grid-row  edgtf-grid-large-gutter">
+	<div class="edgtf-page-content-holder edgtf-grid-col-12">
+		<div class="edgtf-blog-holder edgtf-blog-single edgtf-blog-single-standard">
+			<article id="post-7713" class="post-7713 post type-post status-publish format-standard has-post-thumbnail hentry category-campgrounds category-sips-and-bites-2 category-usa category-videos tag-washington location-tag-rv-campground location-tag-sips-and-bites">
+    <div class="edgtf-post-content">
+        <div class="edgtf-post-heading">
+            
+	<div class="edgtf-post-image">
+					<img width="505" height="650" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20505%20650'%3E%3C/svg%3E" class="attachment-full size-full wp-post-image" alt="trail markers ocean shores" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg 505w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-500x644.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-233x300.jpg 233w" data-lazy-sizes="(max-width: 505px) 100vw, 505px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg" /><noscript><img width="505" height="650" src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg" class="attachment-full size-full wp-post-image" alt="trail markers ocean shores" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg 505w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-500x644.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-233x300.jpg 233w" sizes="(max-width: 505px) 100vw, 505px" /></noscript>					</div>
+        </div>
+        <div class="edgtf-post-text">
+            <div class="edgtf-post-text-inner">
+                <div class="edgtf-post-info-top">
+                    <div class="edgtf-post-info-category">
+    <a href="https://www.gonewiththewynns.com/category/campgrounds" rel="category tag">Campgrounds</a>, <a href="https://www.gonewiththewynns.com/category/sips-and-bites-2" rel="category tag">Sips &amp; Bites</a>, <a href="https://www.gonewiththewynns.com/usa" rel="category tag">USA</a>, <a href="https://www.gonewiththewynns.com/category/videos" rel="category tag">Videos</a></div>                </div>
+                
+<h2 itemprop="name" class="entry-title edgtf-post-title" >
+            Ocean Shores &#8211; Not The Average Beach    </h2>                <div class="edgtf-post-info">
+                    <div class="edgtf-post-info-author">
+    <span class="edgtf-post-info-author-text">
+        By    </span>
+    <a itemprop="author" class="edgtf-post-info-author-link" href="https://www.gonewiththewynns.com/author/jasonwynn">
+        Jason Wynn    </a>
+</div>                    <div itemprop="dateCreated" class="edgtf-post-info-date entry-date published updated">
+            <a itemprop="url" href="https://www.gonewiththewynns.com/2014/01">
+    
+        January 16, 2014        </a>
+    <meta itemprop="interactionCount" content="UserComments: 17"/>
+</div>                    	<div class="edgtf-views-holder">
+		<span class="edgtf-icon-linea-icon icon-basic-eye edgtf-icon-element"></span>
+		<span class="edgtf-views">5.36k</span>
+	</div>
+                    	<div class="edgtf-post-info-comments-holder">
+        <span class="edgtf-icon-linea-icon icon-basic-message edgtf-icon-element"></span>
+		<a itemprop="url" class="edgtf-post-info-comments" href="https://www.gonewiththewynns.com/ocean-shores-washington-beach#comments" target="_self">
+			17 Comments		</a>
+	</div>
+                </div>
+                <div class="edgtf-post-text-main">
+                    <p>I’m not gonna lie, this place is foggy, damp, and not the warm sunny beach destination one might consider visiting for a summer vacation.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="ocean shores" width="650" height="433" class="alignnone size-full wp-image-7865" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719-300x199.jpg 300w" data-lazy-sizes="(max-width: 650px) 100vw, 650px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg" alt="ocean shores" width="650" height="433" class="alignnone size-full wp-image-7865" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6719-300x199.jpg 300w" sizes="(max-width: 650px) 100vw, 650px" /></noscript></a></p>
+<p>Would I ever visit <strong>Ocean Shores, Washington</strong> again?  Oh Yea!  &#8216;The Sweet is never as Sweet without the Sour&#8217; (bonus points if you know where that quote is from)…and the sunny days around here are about as sweet as it gets.</p>
+<p><span id="more-7713"></span></p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="sunset ocean shores" width="650" height="433" class="alignnone size-full wp-image-7867" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676-300x199.jpg 300w" data-lazy-sizes="(max-width: 650px) 100vw, 650px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg" alt="sunset ocean shores" width="650" height="433" class="alignnone size-full wp-image-7867" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6676-300x199.jpg 300w" sizes="(max-width: 650px) 100vw, 650px" /></noscript></a></p>
+<p>Ocean Shores is a town rich in modern history beginning as a Cattle Ranch, then taken over by a California style Land Rush, became the hometown of Pat Boone and eventually was deemed the “Richest Little City” in 1969.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="ocean shores washington" width="650" height="433" class="alignnone size-full wp-image-7868" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915-300x199.jpg 300w" data-lazy-sizes="(max-width: 650px) 100vw, 650px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg" alt="ocean shores washington" width="650" height="433" class="alignnone size-full wp-image-7868" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6915-300x199.jpg 300w" sizes="(max-width: 650px) 100vw, 650px" /></noscript></a></p>
+<p>From our experience its a quaint fishing village built for tourists, and the local wildlife seems to agree considering they walked right up to us begging for food.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20446'%3E%3C/svg%3E" alt="ocean shores wildlife" width="650" height="446" class="alignnone size-full wp-image-7866" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457-500x343.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457-300x205.jpg 300w" data-lazy-sizes="(max-width: 650px) 100vw, 650px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg" alt="ocean shores wildlife" width="650" height="446" class="alignnone size-full wp-image-7866" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457-500x343.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1457-300x205.jpg 300w" sizes="(max-width: 650px) 100vw, 650px" /></noscript></a></p>
+<p>On the foggy nights we found ourselves gravitating to the local dive bar (I think we made our way back 3 times in 5 days). They kept enticing us with a never ending rotating tap and you know us, we had to try them all.  Especially the super hot habanero beer, yep I’m that guy).</p>
+<p>Our tiny car with our logos was quite the hit pulling up to the bar windows, each visit we met new locals who were more than happy to treat us to one of their favorite brews! It was Good Times for sure! The place is called Elk Head Taproom and they serve up their own craft brews, warm nuts, and smoky cheese!</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/elk-head.gif');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/elk-head.gif"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20539'%3E%3C/svg%3E" alt="elk head tap room" width="650" height="539" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/elk-head.gif" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/elk-head.gif" alt="elk head tap room" width="650" height="539" /></noscript></a></p>
+<p>On the nature side of things, there’s something undeniably romantic about getting lost in the rolling fog as you stroll down the beach. Nikki and I must have walked over a hundred miles up and down the beaches measuring the giant molting crab shells, chasing the birds, playing in the sand and of course bringing Singa along for the adventure to stretch his little legs.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/fog-beach.gif');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/fog-beach.gif"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="fog beach ocean shores" width="650" height="433" class="alignnone size-full wp-image-7873" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/fog-beach.gif" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/fog-beach.gif" alt="fog beach ocean shores" width="650" height="433" class="alignnone size-full wp-image-7873" /></noscript></a></p>
+<p>And when the beach gets completely socked in there are these piles of wood and trash that seem to mark all the trails leading inland, very interesting and extremely effective visual markers in the dense fog.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20455%20585'%3E%3C/svg%3E" alt="trail markers ocean shores" width="455" height="585" class="alignnone  wp-image-7870" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg 505w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-500x644.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-233x300.jpg 233w" data-lazy-sizes="(max-width: 455px) 100vw, 455px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg" alt="trail markers ocean shores" width="455" height="585" class="alignnone  wp-image-7870" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363.jpg 505w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-500x644.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/IMAG1363-233x300.jpg 233w" sizes="(max-width: 455px) 100vw, 455px" /></noscript></a></p>
+<p>We were fortunate enough to have sun on 3 of our 6 day visit; one day was so inviting even Cleo came out for some exploration.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="_15A6695" width="650" height="433" class="alignnone size-full wp-image-7871" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695-300x199.jpg 300w" data-lazy-sizes="(max-width: 650px) 100vw, 650px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg" alt="_15A6695" width="650" height="433" class="alignnone size-full wp-image-7871" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695.jpg 650w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695-500x333.jpg 500w, https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6695-300x199.jpg 300w" sizes="(max-width: 650px) 100vw, 650px" /></noscript></a></p>
+<p>A sandy trail leads directly from our campground, through the sea grasses and dumps out onto the beach.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6713.jpg');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6713.jpg"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20642%20427'%3E%3C/svg%3E" alt="_15A6713" width="642" height="427" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6713.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/15A6713.jpg" alt="_15A6713" width="642" height="427" /></noscript></a></p>
+<p>The feeding birds gave us the perfect opportunity for an Alfred Hitchcock moment, and some great photo opportunities.  Remember earlier when I said that thing about the sweet and sour? Well this should sum up the beauty of this place on a sunny day.</p>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/wp-content/uploads/2014/01/beach-time.gif');"  href="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/beach-time.gif"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20650%20433'%3E%3C/svg%3E" alt="hanging on beach ocean shores" width="650" height="433" class="alignnone size-full wp-image-7874" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/beach-time.gif" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/01/beach-time.gif" alt="hanging on beach ocean shores" width="650" height="433" class="alignnone size-full wp-image-7874" /></noscript></a></p>
+<p>We were in Ocean Shores to film the Thousand Trails Oceana Campground, so happy we had the opportunity to visit this tiny town.<br />
+<div class="rll-youtube-player" data-src="//www.youtube.com/embed/k5jt7UcItH8" data-id="k5jt7UcItH8" data-query="rel=0"></div><noscript><iframe width="640" height="360" src="//www.youtube.com/embed/k5jt7UcItH8?rel=0" frameborder="0" allowfullscreen=""></iframe></noscript></p>
+<h4>Have you ever been to Ocean Shores? Did you buy us a beer while were there? Know what those Wood Trash piles are called? Tell us in the comments below.</h4>
+<p><a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/disclaimer');"  href="https://www.gonewiththewynns.com/disclaimer">Disclaimer:</a> While we were compensated to film the campground (thanks <a href="www.rvonthego.com" target="_blank">Thousand Trails</a>!)…all of our experiences and opinions are NOT purchased and are still our own.</p>
+                                    </div>
+                <div class="edgtf-post-info-bottom clearfix">
+                    <div class="edgtf-post-info-bottom-left">
+                        <div class="edgtf-tags-holder">
+    <div class="edgtf-tags-label">
+        Tags:     </div>
+    <div class="edgtf-tags">
+        <a href="https://www.gonewiththewynns.com/tag/washington" rel="tag">washington</a>    </div>
+</div>
+                    </div>
+                    <div class="edgtf-post-info-bottom-right">
+                            <div class="edgtf-share-label">
+        Share:     </div>
+    <div class="edgtf-blog-share">
+        <div class="edgtf-social-share-holder edgtf-list">
+		<ul>
+		<li class="edgtf-facebook-share">
+	<a itemprop="url" class="edgtf-share-link" href="#" onclick="window.open(&#039;https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.gonewiththewynns.com%2Focean-shores-washington-beach&#039;, &#039;sharer&#039;, &#039;toolbar=0,status=0,width=620,height=280&#039;);">
+					<img width="50" height="50" itemprop="image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%3E%3C/svg%3E" alt="facebook" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/facebook-yellow50.png" /><noscript><img width="50" height="50" itemprop="image" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/facebook-yellow50.png" alt="facebook" /></noscript>
+			</a>
+</li><li class="edgtf-twitter-share">
+	<a itemprop="url" class="edgtf-share-link" href="#" onclick="window.open(&#039;https://twitter.com/intent/tweet?text=+%5B%26hellip%3B%5D https://www.gonewiththewynns.com/ocean-shores-washington-beach&#039;, &#039;popupwindow&#039;, &#039;scrollbars=yes,width=800,height=400&#039;);">
+					<img width="50" height="50" itemprop="image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%3E%3C/svg%3E" alt="twitter" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/twitter-yellow50.png" /><noscript><img width="50" height="50" itemprop="image" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/twitter-yellow50.png" alt="twitter" /></noscript>
+			</a>
+</li><li class="edgtf-pinterest-share">
+	<a itemprop="url" class="edgtf-share-link" href="#" onclick="popUp=window.open(&#039;https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.gonewiththewynns.com%2Focean-shores-washington-beach&amp;description=Ocean Shores &#8211; Not The Average Beach&amp;media=https%3A%2F%2Fwww.gonewiththewynns.com%2Fwp-content%2Fuploads%2F2014%2F01%2FIMAG1363.jpg&#039;, &#039;popupwindow&#039;, &#039;scrollbars=yes,width=800,height=400&#039;);popUp.focus();return false;">
+					<img width="50" height="50" itemprop="image" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%3E%3C/svg%3E" alt="pinterest" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/pinterest-yellow-50.png" /><noscript><img width="50" height="50" itemprop="image" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/pinterest-yellow-50.png" alt="pinterest" /></noscript>
+			</a>
+</li>	</ul>
+</div>    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>	<div class="edgtf-author-description">
+		<div class="edgtf-author-description-inner">
+			<div class="edgtf-author-description-content">
+				<div class="edgtf-author-description-image">
+					<a itemprop="url" href="https://www.gonewiththewynns.com/author/jasonwynn" title="Ocean Shores &#8211; Not The Average Beach">
+						<img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3C/svg%3E" class='avatar avatar-192 photo' height='192' width='192' data-lazy-src="https://secure.gravatar.com/avatar/94f50b04d69e70975f3aa13c7b5e434f?s=192&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/94f50b04d69e70975f3aa13c7b5e434f?s=192&#038;d=mm&#038;r=pg' class='avatar avatar-192 photo' height='192' width='192' /></noscript>					</a>
+				</div>
+				<div class="edgtf-author-description-text-holder">
+                    <h4 class="edgtf-author-name vcard author">
+                        <a itemprop="url" href="https://www.gonewiththewynns.com/author/jasonwynn" title="Ocean Shores &#8211; Not The Average Beach">
+							<span class="fn">
+								Jason Wynn							</span>
+                        </a>
+                    </h4>
+											<div class="edgtf-author-text">
+							<p itemprop="description">Famous for my "how-not-to" videos, and typically the man behind the camera, sometimes I’m forced to be here in the “spotlight”.  When you see my face you’re probably reading something more technical than adventurous, but either way I do my best to tell it like it is and infuse my opinions into the commentary…after all this is a blog and not MSN.</p>
+						</div>
+																												<div class="edgtf-author-social-icons clearfix">
+																	<a itemprop="url" href="https://www.facebook.com/GoneWithTheWynns" target="_blank">
+										<span aria-hidden="true" class="edgtf-icon-font-elegant social_facebook edgtf-author-social-facebook edgtf-author-social-icon " ></span>									</a>
+																	<a itemprop="url" href="https://twitter.com/the_wynns" target="_blank">
+										<span aria-hidden="true" class="edgtf-icon-font-elegant social_twitter edgtf-author-social-twitter edgtf-author-social-icon " ></span>									</a>
+																	<a itemprop="url" href="https://www.instagram.com/the_wynns/" target="_blank">
+										<span aria-hidden="true" class="edgtf-icon-font-elegant social_instagram edgtf-author-social-instagram edgtf-author-social-icon " ></span>									</a>
+															</div>
+															</div>
+			</div>
+		</div>
+	</div>
+	<div class="edgtf-blog-single-navigation">
+		<div class="edgtf-blog-single-navigation-inner clearfix">
+									<a itemprop="url" class="edgtf-blog-single-prev" href="https://www.gonewiththewynns.com/cadillac-ranch">
+							<span class="edgtf-blog-single-nav-label">previous article</span>						</a>
+											<a itemprop="url" class="edgtf-blog-single-next" href="https://www.gonewiththewynns.com/Bar-Z-Winery-Texas">
+							<span class="edgtf-blog-single-nav-label">next article</span>						</a>
+							</div>
+	</div>
+	<div class="edgtf-comment-holder clearfix" id="comments">
+					<div class="edgtf-comment-holder-inner">
+				<div class="edgtf-comments-title">
+					<h3>Comments (17)</h3>
+				</div>
+				<div class="edgtf-comments">
+					<ul class="edgtf-comment-list">
+								
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/4f12647f75b35556355f6bf73a136f1b?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/4f12647f75b35556355f6bf73a136f1b?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Joanne Plourde					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-866663">
+						<p>Interesting info! Thanks!👍</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-866663' data-commentid="866663" data-postid="7713" data-belowelement="comment-866663" data-respondelement="respond" data-replyto="Reply to Joanne Plourde" aria-label='Reply to Joanne Plourde'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/a2a88ee93db2708dcb1b9139129b1ad1?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/a2a88ee93db2708dcb1b9139129b1ad1?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Diana Woods					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-831325">
+						<p>We live in Snoqualmie WA it&#8217;s not much less rainy here than OS.  We go there a few times a year and are thinking of moving there (beautiful new homes $200.000) ?.  If we can sell our home we can buy home in OS cash with a lots of money left over.  Love walking on beach with dogs Amazing!!!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-831325' data-commentid="831325" data-postid="7713" data-belowelement="comment-831325" data-respondelement="respond" data-replyto="Reply to Diana Woods" aria-label='Reply to Diana Woods'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/f06fe642df4066c996d1be8c701f3ba7?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/f06fe642df4066c996d1be8c701f3ba7?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Kelsey					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-819389">
+						<p>Hello,<br />
+I am an undergraduate college student and I was hoping that you could give me permission to use one of your Washington beach photographs for a project that I am working  on. None of my work will be published and I would cite and credit you for the photograph in my report.<br />
+Thanks for your help!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-819389' data-commentid="819389" data-postid="7713" data-belowelement="comment-819389" data-respondelement="respond" data-replyto="Reply to Kelsey" aria-label='Reply to Kelsey'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/3f266f30fab97c4ce913018c17b941af?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/3f266f30fab97c4ce913018c17b941af?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Paul meeker					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-810543">
+						<p>Moving there in June of 2017, can&#8217;t wait to feel the ocean on my face</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-810543' data-commentid="810543" data-postid="7713" data-belowelement="comment-810543" data-respondelement="respond" data-replyto="Reply to Paul meeker" aria-label='Reply to Paul meeker'>reply</a>			</div>
+		</div>
+				<ul class="children">
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/eb6ac7f0e31219aa252ef8b8923ce5f2?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/eb6ac7f0e31219aa252ef8b8923ce5f2?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Trish					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-824012">
+						<p>How do you like it? I&#8217;m looking for a place to live that&#8217;s not sunny, rains a lot and is very cool. I&#8217;d like to hear how you like the weather, the community, houses, any info you can share! Thanks!!!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-824012' data-commentid="824012" data-postid="7713" data-belowelement="comment-824012" data-respondelement="respond" data-replyto="Reply to Trish" aria-label='Reply to Trish'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/b9b3ef657cfc2f7fa888bc2bf5a69d1b?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/b9b3ef657cfc2f7fa888bc2bf5a69d1b?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Stephanie Wolfe					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-829197">
+						<p>My husband and I are thinking of retiring in Ocean Shores.  Now that you have been there a while, what do you think?</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-829197' data-commentid="829197" data-postid="7713" data-belowelement="comment-829197" data-respondelement="respond" data-replyto="Reply to Stephanie Wolfe" aria-label='Reply to Stephanie Wolfe'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/a9f2b3b4ee92a2c6a5a19f7af59fa8aa?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/a9f2b3b4ee92a2c6a5a19f7af59fa8aa?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Tom					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-793212">
+						<p>I&#8217;m covered in moss because I grew up here and the coast is an unusual animal.<br />
+If you can plan your time when the breeze blows towards the water you will probably have sun.<br />
+If its blowing towards the land it will be foggy on the beach and for about 1 mile inland then sunny&#8230;..if its sunny.<br />
+But in the summer when that breeze is offshore BEAUTIFUL, warm and short sleeves, otherwise I don&#8217;t care what time of year I always bring a warm coat.<br />
+Heres why, the water temp is about 50-55 so the air above is also that cold, then it blows to the beach and its chilly even when the sun shines. But turn it around when the land is 80 degrees and that hot air blows down to the beach and its wonderful.</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-793212' data-commentid="793212" data-postid="7713" data-belowelement="comment-793212" data-respondelement="respond" data-replyto="Reply to Tom" aria-label='Reply to Tom'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/567db70d3cbfa2509050ee44006daef6?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/567db70d3cbfa2509050ee44006daef6?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Patti Habeck					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-730890">
+						<p>We are in Ocean Shores this week to buy a home. Leaving Yosemite area for this magical place.</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-730890' data-commentid="730890" data-postid="7713" data-belowelement="comment-730890" data-respondelement="respond" data-replyto="Reply to Patti Habeck" aria-label='Reply to Patti Habeck'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/91ee134d2b96be71c17d1615c9ab2cfb?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/91ee134d2b96be71c17d1615c9ab2cfb?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Laura					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-156461">
+						<p>I live in Ocean Shores Wa, and it is BEAUTIFUL.</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-156461' data-commentid="156461" data-postid="7713" data-belowelement="comment-156461" data-respondelement="respond" data-replyto="Reply to Laura" aria-label='Reply to Laura'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/19c177bab490993a9a15ec823010de5d?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/19c177bab490993a9a15ec823010de5d?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Ed					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-50841">
+						<p>I m a little behind but would love to see a flip chart lesson on inverters. I learned a lot from your 3 minute flip chart.</p>
+<p>Thanks,<br />
+Ed</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-50841' data-commentid="50841" data-postid="7713" data-belowelement="comment-50841" data-respondelement="respond" data-replyto="Reply to Ed" aria-label='Reply to Ed'>reply</a>			</div>
+		</div>
+				<ul class="children">
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/6bf4b953e66ab501d45ce8cdfa27763b?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/6bf4b953e66ab501d45ce8cdfa27763b?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												<a href='https://www.gonewiththewynns.com/' rel='external nofollow ugc' class='url'>Nikki Wynn</a>					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-50938">
+						<p>So glad to hear you liked our flip chart video!  Here is a link to the video about inverters&#8230; <a onclick="javascript:pageTracker._trackPageview('/outgoing/www.gonewiththewynns.com/rv-inverter-pure-sine');"  href="https://www.gonewiththewynns.com/rv-inverter-pure-sine" rel="nofollow ugc">https://www.gonewiththewynns.com/rv-inverter-pure-sine</a></p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-50938' data-commentid="50938" data-postid="7713" data-belowelement="comment-50938" data-respondelement="respond" data-replyto="Reply to Nikki Wynn" aria-label='Reply to Nikki Wynn'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/1013f3b7a136b54daf9f78cf1bd83d8f?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/1013f3b7a136b54daf9f78cf1bd83d8f?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												<a href='http://georgemauro.com' rel='external nofollow ugc' class='url'>George Mauro</a>					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-50313">
+						<p>&#8220;&#8230;craft brews, warm nuts, and smoky cheese!&#8221;</p>
+<p>Yep, sounds like heaven to me…<br />
+😉</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-50313' data-commentid="50313" data-postid="7713" data-belowelement="comment-50313" data-respondelement="respond" data-replyto="Reply to George Mauro" aria-label='Reply to George Mauro'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/426ddc7c6da5b0a94e2e2b678f97205e?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/426ddc7c6da5b0a94e2e2b678f97205e?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												<a href='http://livelaughrv@wordpress.com' rel='external nofollow ugc' class='url'>Ingrid</a>					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-50295">
+						<p>Looks like a beautiful place.  The Pacific northwest is on our must see list.  I noticed you&#8217;ll be in Chicago and WI.  You might want to consider going up to Michigan&#8217;s upper peninsula and visiting Mackinac Island&#8230;.one of my favorites.  Happy trails!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-50295' data-commentid="50295" data-postid="7713" data-belowelement="comment-50295" data-respondelement="respond" data-replyto="Reply to Ingrid" aria-label='Reply to Ingrid'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/813e27d4742539ba13343359dacb7308?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/813e27d4742539ba13343359dacb7308?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												cindy					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-50287">
+						<p>Looks like a &#8220;Simple pleasures are the best&#8221; kind of place. Looks like a peaceful place to be!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-50287' data-commentid="50287" data-postid="7713" data-belowelement="comment-50287" data-respondelement="respond" data-replyto="Reply to cindy" aria-label='Reply to cindy'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/fd9f4fb109fbb2d3149fa229aee771f5?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/fd9f4fb109fbb2d3149fa229aee771f5?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												<a href='http://A' rel='external nofollow ugc' class='url'>Brenda</a>					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-49900">
+						<p>You&#8217;re making me home sick.  I loved the beaches in the Pacific Northwest.  FL isn&#8217;t quite the same -:).</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-49900' data-commentid="49900" data-postid="7713" data-belowelement="comment-49900" data-respondelement="respond" data-replyto="Reply to Brenda" aria-label='Reply to Brenda'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/22db4f7336f8c883fc83d60c0194e5cb?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/22db4f7336f8c883fc83d60c0194e5cb?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												<a href='http://www.newschoolnomads.com' rel='external nofollow ugc' class='url'>Jenn - Newschool Nomads</a>					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-49670">
+						<p>I found out I was pregnant at this campground. We were in such shock I don&#8217;t think we left the RV once in the few days we were there. Romantic (classy?), huh!</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-49670' data-commentid="49670" data-postid="7713" data-belowelement="comment-49670" data-respondelement="respond" data-replyto="Reply to Jenn - Newschool Nomads" aria-label='Reply to Jenn - Newschool Nomads'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+		
+		<li>
+		<div class="edgtf-comment clearfix">
+							<div class="edgtf-comment-image"> <img alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2096%2096'%3E%3C/svg%3E" class='avatar avatar-96 photo' height='96' width='96' data-lazy-src="https://secure.gravatar.com/avatar/c52354b7304d5c0e8fa0fd27ee402f0f?s=96&#038;d=mm&#038;r=pg" /><noscript><img alt='' src='https://secure.gravatar.com/avatar/c52354b7304d5c0e8fa0fd27ee402f0f?s=96&#038;d=mm&#038;r=pg' class='avatar avatar-96 photo' height='96' width='96' /></noscript> </div>
+						<div class="edgtf-comment-text">
+				<div class="edgtf-comment-info">
+					<h4 class="edgtf-comment-name vcard">
+												Stella MacDonald					</h4>
+				</div>
+									<div class="edgtf-text-holder" id="comment-49477">
+						<p>It was a very foggy week on the coast that week but it was our chance to catch up with you and have a cup of coffee in the sunshine one morning. Great to meet you and share a few stories. We will be on the road soon and maybe our paths will cross again. Happy travels.</p>
+					</div>
+				                <a rel='nofollow' class='comment-reply-link' href='#comment-49477' data-commentid="49477" data-postid="7713" data-belowelement="comment-49477" data-respondelement="respond" data-replyto="Reply to Stella MacDonald" aria-label='Reply to Stella MacDonald'>reply</a>			</div>
+		</div>
+				</li><!-- #comment-## -->
+					</ul>
+				</div>
+			</div>
+					</div>
+	
+            <div class="edgtf-comment-form">
+            <div class="edgtf-comment-form-inner">
+                	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Post a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/ocean-shores-washington-beach#respond" style="display:none;">cancel reply</a></small></h3><form action="https://www.gonewiththewynns.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><textarea id="comment" placeholder="Comment" name="comment" cols="45" rows="6" aria-required="true"></textarea><div class="edgtf-two-columns-50-50 clearfix"><div class="edgtf-two-columns-50-50-inner clearfix"><div class="edgtf-column"><div class="edgtf-column-inner"><input id="author" name="author" placeholder="Name" type="text" value="" aria-required='true' /></div></div>
+<div class="edgtf-column"><div class="edgtf-column-inner"><input id="email" name="email" placeholder="Email*" type="text" value="" aria-required='true' /></div></div></div></div>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"  /><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit_comment" class="submit" value="Submit" /> <input type='hidden' name='comment_post_ID' value='7713' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="38a0356884" /></p><p style="display: none !important;"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="166"/><script type="rocketlazyloadscript">document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );</script></p></form>	</div><!-- #respond -->
+	            </div>
+        </div>
+    	    <div class="edgtf-related-posts-holder">
+        <div class="edgtf-related-posts-holder-inner">
+                            <div class="edgtf-related-posts-title">
+                    <h3>YOU MAY ALSO LIKE</h3>
+                </div>
+                <div class="edgtf-related-posts-inner clearfix">
+                                            <div class="edgtf-related-post">
+                            <div class="edgtf-related-post-inner">
+			                                                    <div class="edgtf-related-post-image">
+                                    <a itemprop="url" href="https://www.gonewiththewynns.com/RV-camping-seattle-washington" title="RV Meetups, Foodie Finds &#038; Camping In Seattle">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20600'%3E%3C/svg%3E" alt="Tacoma washington" width="800" height="600" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2015/10/DSC9216-800x600.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2015/10/DSC9216-800x600.jpg" alt="Tacoma washington" width="800" height="600" /></noscript>                                    </a>
+                                </div>
+			                                                    <div class="edgtf-rp-content">
+                                    <div class="edgtf-rp-info-top">
+                                        <div class="edgtf-post-info-category">
+    <a href="https://www.gonewiththewynns.com/category/campgrounds" rel="category tag">Campgrounds</a>, <a href="https://www.gonewiththewynns.com/category/sips-and-bites-2" rel="category tag">Sips &amp; Bites</a>, <a href="https://www.gonewiththewynns.com/usa" rel="category tag">USA</a></div>                                    </div>
+                                    <h4 itemprop="name" class="entry-title edgtf-post-title"><a itemprop="url" href="https://www.gonewiththewynns.com/RV-camping-seattle-washington" title="RV Meetups, Foodie Finds &#038; Camping In Seattle">RV Meetups, Foodie Finds &#038; Camping In Seattle</a></h4>
+                                    <div class="edgtf-post-info">
+                                        <div itemprop="dateCreated" class="edgtf-post-info-date entry-date published updated">
+            <a itemprop="url" href="https://www.gonewiththewynns.com/2015/10">
+    
+        October 21, 2015        </a>
+    <meta itemprop="interactionCount" content="UserComments: 17"/>
+</div>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="edgtf-related-post">
+                            <div class="edgtf-related-post-inner">
+			                                                    <div class="edgtf-related-post-image">
+                                    <a itemprop="url" href="https://www.gonewiththewynns.com/encounters-and-spontaneous-adventures-birch-bay-washington" title="Unplanned Encounters and Spontaneous Adventures in Birch Bay">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20600'%3E%3C/svg%3E" alt="Birch Bay washington" width="800" height="600" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A1238-800x600.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A1238-800x600.jpg" alt="Birch Bay washington" width="800" height="600" /></noscript>                                    </a>
+                                </div>
+			                                                    <div class="edgtf-rp-content">
+                                    <div class="edgtf-rp-info-top">
+                                        <div class="edgtf-post-info-category">
+    <a href="https://www.gonewiththewynns.com/category/the-adventures" rel="category tag">Adventure</a>, <a href="https://www.gonewiththewynns.com/category/campgrounds" rel="category tag">Campgrounds</a>, <a href="https://www.gonewiththewynns.com/category/rvin" rel="category tag">RVing</a>, <a href="https://www.gonewiththewynns.com/usa" rel="category tag">USA</a>, <a href="https://www.gonewiththewynns.com/category/videos" rel="category tag">Videos</a></div>                                    </div>
+                                    <h4 itemprop="name" class="entry-title edgtf-post-title"><a itemprop="url" href="https://www.gonewiththewynns.com/encounters-and-spontaneous-adventures-birch-bay-washington" title="Unplanned Encounters and Spontaneous Adventures in Birch Bay">Unplanned Encounters and Spontaneous Adventures in Birch Bay</a></h4>
+                                    <div class="edgtf-post-info">
+                                        <div itemprop="dateCreated" class="edgtf-post-info-date entry-date published updated">
+            <a itemprop="url" href="https://www.gonewiththewynns.com/2014/02">
+    
+        February 23, 2014        </a>
+    <meta itemprop="interactionCount" content="UserComments: 17"/>
+</div>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="edgtf-related-post">
+                            <div class="edgtf-related-post-inner">
+			                                                    <div class="edgtf-related-post-image">
+                                    <a itemprop="url" href="https://www.gonewiththewynns.com/bellingham-wa-city-subdued-excitement" title="Bellingham, WA &#8211; The City of Subdued Excitement">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20600'%3E%3C/svg%3E" alt="bellingham" width="800" height="600" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A1145-800x600.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A1145-800x600.jpg" alt="bellingham" width="800" height="600" /></noscript>                                    </a>
+                                </div>
+			                                                    <div class="edgtf-rp-content">
+                                    <div class="edgtf-rp-info-top">
+                                        <div class="edgtf-post-info-category">
+    <a href="https://www.gonewiththewynns.com/category/the-adventures" rel="category tag">Adventure</a>, <a href="https://www.gonewiththewynns.com/category/rvin" rel="category tag">RVing</a>, <a href="https://www.gonewiththewynns.com/usa" rel="category tag">USA</a></div>                                    </div>
+                                    <h4 itemprop="name" class="entry-title edgtf-post-title"><a itemprop="url" href="https://www.gonewiththewynns.com/bellingham-wa-city-subdued-excitement" title="Bellingham, WA &#8211; The City of Subdued Excitement">Bellingham, WA &#8211; The City of Subdued Excitement</a></h4>
+                                    <div class="edgtf-post-info">
+                                        <div itemprop="dateCreated" class="edgtf-post-info-date entry-date published updated">
+            <a itemprop="url" href="https://www.gonewiththewynns.com/2014/02">
+    
+        February 20, 2014        </a>
+    <meta itemprop="interactionCount" content="UserComments: 17"/>
+</div>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="edgtf-related-post">
+                            <div class="edgtf-related-post-inner">
+			                                                    <div class="edgtf-related-post-image">
+                                    <a itemprop="url" href="https://www.gonewiththewynns.com/leavenworth-washington-bavarian-village" title="Leavenworth, WA – More Than a Mock Bavarian Village">
+										<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20600'%3E%3C/svg%3E" alt="Leavenworth, Washington" width="800" height="600" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A8497-800x600.jpg" /><noscript><img src="https://www.gonewiththewynns.com/wp-content/uploads/2014/02/15A8497-800x600.jpg" alt="Leavenworth, Washington" width="800" height="600" /></noscript>                                    </a>
+                                </div>
+			                                                    <div class="edgtf-rp-content">
+                                    <div class="edgtf-rp-info-top">
+                                        <div class="edgtf-post-info-category">
+    <a href="https://www.gonewiththewynns.com/category/the-adventures" rel="category tag">Adventure</a>, <a href="https://www.gonewiththewynns.com/category/campgrounds" rel="category tag">Campgrounds</a>, <a href="https://www.gonewiththewynns.com/category/rvin" rel="category tag">RVing</a>, <a href="https://www.gonewiththewynns.com/category/sips-and-bites-2" rel="category tag">Sips &amp; Bites</a>, <a href="https://www.gonewiththewynns.com/usa" rel="category tag">USA</a>, <a href="https://www.gonewiththewynns.com/category/videos" rel="category tag">Videos</a></div>                                    </div>
+                                    <h4 itemprop="name" class="entry-title edgtf-post-title"><a itemprop="url" href="https://www.gonewiththewynns.com/leavenworth-washington-bavarian-village" title="Leavenworth, WA – More Than a Mock Bavarian Village">Leavenworth, WA – More Than a Mock Bavarian Village</a></h4>
+                                    <div class="edgtf-post-info">
+                                        <div itemprop="dateCreated" class="edgtf-post-info-date entry-date published updated">
+            <a itemprop="url" href="https://www.gonewiththewynns.com/2014/02">
+    
+        February 16, 2014        </a>
+    <meta itemprop="interactionCount" content="UserComments: 17"/>
+</div>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+		</div>
+	</div>
+	</div>		</div>
+		
+			</div>
+</div> <!-- close div.content_inner -->
+	</div>  <!-- close div.content -->
+					<footer class="edgtf-page-footer ">
+				<div class="edgtf-footer-top-holder">
+	<div class="edgtf-footer-top-inner edgtf-full-width">
+		<div class="edgtf-grid-row edgtf-footer-top-alignment-center">
+							<div class="edgtf-column-content edgtf-grid-col-3">
+					<div id="media_image-5" class="widget edgtf-footer-column-1 widget_media_image"><a href="https://amzn.to/2zalgPb"><img width="150" height="87" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20150%2087'%3E%3C/svg%3E" class="image wp-image-30512  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150.png 150w, https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150-31x18.png 31w" data-lazy-sizes="(max-width: 150px) 100vw, 150px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150.png" /><noscript><img width="150" height="87" src="https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150.png" class="image wp-image-30512  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150.png 150w, https://www.gonewiththewynns.com/wp-content/uploads/2020/06/amazon-logo150-31x18.png 31w" sizes="(max-width: 150px) 100vw, 150px" /></noscript></a></div><div id="text-9" class="widget edgtf-footer-column-1 widget_text">			<div class="textwidget"><p><span style="color: #ffffff;">We are a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means to earn fees by linking to Amazon.com and affiliated sites.</span></p>
+</div>
+		</div>				</div>
+							<div class="edgtf-column-content edgtf-grid-col-3">
+					<div class="widget edgtf-social-icons-group-widget edgtf-light-skin text-align-center">							<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 30px"				   href="https://instagram.com/the_wynns/" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-instagram"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 30px"				   href="https://www.facebook.com/GoneWithTheWynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-facebook"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 30px" href="https://twitter.com/the_wynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-twitter"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 30px" href="https://www.youtube.com/user/gonewiththewynns" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-youtube-play"></span>				</a>
+										<a class="edgtf-social-icon-widget-holder edgtf-icon-has-hover" data-hover-color="#f9d63c" style="color: #ffffff;;font-size: 30px" href="https://bit.ly/WynnsEmail" target="_blank">
+					<span class="edgtf-social-icon-widget fa fa-envelope-o"></span>				</a>
+						</div>				</div>
+							<div class="edgtf-column-content edgtf-grid-col-3">
+							
+		<a  style="font-size: 30px" class="edgtf-search-opener edgtf-icon-has-hover" href="javascript:void(0)">
+            <span class="edgtf-search-opener-wrapper">
+                <i class="edgtf-icon-font-awesome fa fa-search "></i>	            		            <span class="edgtf-search-icon-text">Search</span>
+	                        </span>
+		</a>
+					</div>
+							<div class="edgtf-column-content edgtf-grid-col-3">
+					<div id="media_image-3" class="widget edgtf-footer-column-4 widget_media_image"><a href="https://www.gonewiththewynns.com/tip-jar"><img width="125" height="70" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2070'%3E%3C/svg%3E" class="image wp-image-28036  attachment-125x70 size-125x70" alt="" style="max-width: 100%; height: auto;" data-lazy-srcset="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-300x169.png 300w, https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-31x17.png 31w, https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy.png 353w" data-lazy-sizes="(max-width: 125px) 100vw, 125px" data-lazy-src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-300x169.png" /><noscript><img width="125" height="70" src="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-300x169.png" class="image wp-image-28036  attachment-125x70 size-125x70" alt="" style="max-width: 100%; height: auto;" srcset="https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-300x169.png 300w, https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy-31x17.png 31w, https://www.gonewiththewynns.com/wp-content/uploads/2018/10/feeling-tipsy.png 353w" sizes="(max-width: 125px) 100vw, 125px" /></noscript></a></div>				</div>
+					</div>
+	</div>
+</div>			</footer>
+			</div> <!-- close div.edgtf-wrapper-inner  -->
+</div> <!-- close div.edgtf-wrapper -->
+<div id="amzn-assoc-ad-02c5a198-45af-4c5c-a9fc-498bf2ea3281"></div><script type="rocketlazyloadscript" async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=02c5a198-45af-4c5c-a9fc-498bf2ea3281"></script>
+<!-- tracker added by Ultimate Google Analytics plugin v1.6.0: http://www.oratransplant.nl/uga -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + gaJsHost + "stats.g.doubleclick.net/dc.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-18736675-3");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+		(function () {
+			var c = document.body.className;
+			c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+			document.body.className = c;
+		})();
+	</script>
+	<script type='text/javascript' id='journo-edge-script-handle-modules-js-extra'>
+/* <![CDATA[ */
+var edgtfGlobalVars = {"vars":{"edgtfAddForAdminBar":0,"edgtfElementAppearAmount":-100,"edgtfAjaxUrl":"https:\/\/www.gonewiththewynns.com\/wp-admin\/admin-ajax.php","edgtfStickyHeaderHeight":0,"edgtfStickyHeaderTransparencyHeight":70,"edgtfTopBarHeight":46,"edgtfLogoAreaHeight":90,"edgtfMenuAreaHeight":105,"edgtfMobileHeaderHeight":70}};
+var edgtfPerPageVars = {"vars":{"edgtfStickyScrollAmount":0,"edgtfHeaderTransparencyHeight":0,"edgtfHeaderVerticalWidth":0}};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules.js?ver=5.9.2' id='journo-edge-script-handle-modules-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-news/assets/js/news.min.js?ver=5.9.2' id='edgtf-news-script-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4-wc.6.3.1' id='js-cookie-js' defer></script>
+<script type='text/javascript' id='woocommerce-js-extra'>
+/* <![CDATA[ */
+var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=6.3.1' id='woocommerce-js' defer></script>
+<script type='text/javascript' id='wc-cart-fragments-js-extra'>
+/* <![CDATA[ */
+var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_9821e8c32b3f61904102d1bcaac796b2","fragment_name":"wc_fragments_9821e8c32b3f61904102d1bcaac796b2","request_timeout":"5000"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=6.3.1' id='wc-cart-fragments-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-browser-checker-js-after'>
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script type='text/javascript' id='rocket-preload-links-js-extra'>
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/map|\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/checkout(.*)|\/cart|\/my-account(.*)|\/wc-api\/v(.*)|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin|\/logout|\/wp-login.php|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/www.gonewiththewynns.com","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-preload-links-js-after'>
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.1' id='jquery-ui-core-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/jquery/ui/tabs.min.js?ver=1.13.1' id='jquery-ui-tabs-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/jquery/ui/accordion.min.js?ver=1.13.1' id='jquery-ui-accordion-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='mediaelement-core-js-before'>
+var mejsL10n = {"language":"en","strings":{"mejs.download-file":"Download File","mejs.install-flash":"You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/","mejs.fullscreen":"Fullscreen","mejs.play":"Play","mejs.pause":"Pause","mejs.time-slider":"Time Slider","mejs.time-help-text":"Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.","mejs.live-broadcast":"Live Broadcast","mejs.volume-help-text":"Use Up\/Down Arrow keys to increase or decrease volume.","mejs.unmute":"Unmute","mejs.mute":"Mute","mejs.volume-slider":"Volume Slider","mejs.video-player":"Video Player","mejs.audio-player":"Audio Player","mejs.captions-subtitles":"Captions\/Subtitles","mejs.captions-chapters":"Chapters","mejs.none":"None","mejs.afrikaans":"Afrikaans","mejs.albanian":"Albanian","mejs.arabic":"Arabic","mejs.belarusian":"Belarusian","mejs.bulgarian":"Bulgarian","mejs.catalan":"Catalan","mejs.chinese":"Chinese","mejs.chinese-simplified":"Chinese (Simplified)","mejs.chinese-traditional":"Chinese (Traditional)","mejs.croatian":"Croatian","mejs.czech":"Czech","mejs.danish":"Danish","mejs.dutch":"Dutch","mejs.english":"English","mejs.estonian":"Estonian","mejs.filipino":"Filipino","mejs.finnish":"Finnish","mejs.french":"French","mejs.galician":"Galician","mejs.german":"German","mejs.greek":"Greek","mejs.haitian-creole":"Haitian Creole","mejs.hebrew":"Hebrew","mejs.hindi":"Hindi","mejs.hungarian":"Hungarian","mejs.icelandic":"Icelandic","mejs.indonesian":"Indonesian","mejs.irish":"Irish","mejs.italian":"Italian","mejs.japanese":"Japanese","mejs.korean":"Korean","mejs.latvian":"Latvian","mejs.lithuanian":"Lithuanian","mejs.macedonian":"Macedonian","mejs.malay":"Malay","mejs.maltese":"Maltese","mejs.norwegian":"Norwegian","mejs.persian":"Persian","mejs.polish":"Polish","mejs.portuguese":"Portuguese","mejs.romanian":"Romanian","mejs.russian":"Russian","mejs.serbian":"Serbian","mejs.slovak":"Slovak","mejs.slovenian":"Slovenian","mejs.spanish":"Spanish","mejs.swahili":"Swahili","mejs.swedish":"Swedish","mejs.tagalog":"Tagalog","mejs.thai":"Thai","mejs.turkish":"Turkish","mejs.ukrainian":"Ukrainian","mejs.vietnamese":"Vietnamese","mejs.welsh":"Welsh","mejs.yiddish":"Yiddish"}};
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=4.2.16' id='mediaelement-core-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/mediaelement-migrate.min.js?ver=5.9.2' id='mediaelement-migrate-js' defer></script>
+<script type='text/javascript' id='mediaelement-js-extra'>
+/* <![CDATA[ */
+var _wpmejsSettings = {"pluginPath":"\/wp-includes\/js\/mediaelement\/","classPrefix":"mejs-","stretching":"responsive"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=5.9.2' id='wp-mediaelement-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.appear.js?ver=5.9.2' id='appear-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/modernizr.min.js?ver=5.9.2' id='modernizr-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/hoverIntent.min.js?ver=1.10.2' id='hoverIntent-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.plugin.js?ver=5.9.2' id='jquery-plugin-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/owl.carousel.min.js?ver=5.9.2' id='owl-carousel-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/slick.min.js?ver=5.9.2' id='slick-slider-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.waypoints.min.js?ver=5.9.2' id='waypoints-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/fluidvids.min.js?ver=5.9.2' id='fluidvids-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/js_composer/assets/lib/prettyphoto/js/jquery.prettyPhoto.min.js?ver=6.4.1' id='prettyphoto-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/perfect-scrollbar.jquery.min.js?ver=5.9.2' id='perfect-scrollbar-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/ScrollToPlugin.min.js?ver=5.9.2' id='scrolltoplugin-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/parallax.min.js?ver=5.9.2' id='parallax-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.nicescroll.min.js?ver=5.9.2' id='nicescroll-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.waitforimages.js?ver=5.9.2' id='waitforimages-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery.easing.1.3.js?ver=5.9.2' id='jquery-easing-1.3-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/js_composer/assets/lib/bower/isotope/dist/isotope.pkgd.min.js?ver=6.4.1' id='isotope-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/packery-mode.pkgd.min.js?ver=5.9.2' id='packery-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/js/modules/plugins/jquery-mousewheel.min.js?ver=5.9.2' id='jquery-mousewheel-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/shortcodes/countdown/assets/js/plugins/jquery.countdown.min.js?ver=5.9.2' id='countdown-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/shortcodes/counter/assets/js/plugins/counter.js?ver=5.9.2' id='counter-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/shortcodes/counter/assets/js/plugins/absoluteCounter.min.js?ver=5.9.2' id='absoluteCounter-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/shortcodes/custom-font/assets/js/plugins/typed.js?ver=5.9.2' id='typed-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/shortcodes/pie-chart/assets/js/plugins/easypiechart.js?ver=5.9.2' id='easypiechart-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/assets/js/select2/select2.full.min.js?ver=4.0.3-wc.6.3.1' id='select2-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://www.gonewiththewynns.com/wp-includes/js/comment-reply.min.js?ver=5.9.2' id='comment-reply-js' defer></script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.gonewiththewynns.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script><script>function lazyLoadThumb(e){var t='<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<button class="play" aria-label="play Youtube video"></button>';return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.parentNode.dataset.query.length?'':'&'+this.parentNode.dataset.query;e.setAttribute("src",t.replace("ID",this.parentNode.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.parentNode.replaceChild(e,this.parentNode)}document.addEventListener("DOMContentLoaded",function(){var e,t,p,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id),a[t].appendChild(e),p=e.querySelector('.play'),p.onclick=lazyLoadYoutubeIframe});</script><script type="rocketlazyloadscript">"use strict";function wprRemoveCPCSS(){var preload_stylesheets=document.querySelectorAll('link[data-rocket-async="style"][rel="preload"]');if(preload_stylesheets&&0<preload_stylesheets.length)for(var stylesheet_index=0;stylesheet_index<preload_stylesheets.length;stylesheet_index++){var media=preload_stylesheets[stylesheet_index].getAttribute("media")||"all";if(window.matchMedia(media).matches)return void setTimeout(wprRemoveCPCSS,200)}var elem=document.getElementById("rocket-critical-css");elem&&"remove"in elem&&elem.remove()}window.addEventListener?window.addEventListener("load",wprRemoveCPCSS):window.attachEvent&&window.attachEvent("onload",wprRemoveCPCSS);</script><noscript><link rel='stylesheet' id='wp-block-library-css'  href='https://www.gonewiththewynns.com/wp-includes/css/dist/block-library/style.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='wc-blocks-vendors-style-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-vendors-style.css?ver=6.9.0' type='text/css' media='all' /><link rel='stylesheet' id='wc-blocks-style-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-style.css?ver=6.9.0' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-style-handle-modules-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/modules.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='edgtf-news-style-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-news/assets/css/news.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-style-handle-modules-responsive-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/modules-responsive.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='edgtf-news-responsive-style-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-news/assets/css/news-responsive.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='rs-plugin-settings-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/revslider/public/assets/css/rs6.css?ver=6.2.23' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-style-handle-default-style-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/style.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-child-style-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo-child/style.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-font_awesome-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/font-awesome/css/font-awesome.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-font_elegant-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/elegant-icons/style.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-ion_icons-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/ion-icons/css/ionicons.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-linear_icons-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linear-icons/style.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-linea_icons-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/linea-icons/style.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='mediaelement-css'  href='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16' type='text/css' media='all' /><link rel='stylesheet' id='wp-mediaelement-css'  href='https://www.gonewiththewynns.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.9.2' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-style-handle-style-dynamic-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/style_dynamic.css?ver=1618898257' type='text/css' media='all' /><link rel='stylesheet' id='journo-edge-style-handle-style-dynamic-responsive-css'  href='https://www.gonewiththewynns.com/wp-content/themes/journo/assets/css/style_dynamic_responsive.css?ver=1618898257' type='text/css' media='all' /><link rel='stylesheet' id='journo-core-dashboard-style-css'  href='https://www.gonewiththewynns.com/wp-content/plugins/edgtf-core/core-dashboard/assets/css/core-dashboard.min.css?ver=5.9.2' type='text/css' media='all' /></noscript></body>
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1648132242 -->
